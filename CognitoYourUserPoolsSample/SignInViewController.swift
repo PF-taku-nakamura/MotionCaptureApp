@@ -41,7 +41,7 @@ class SignInViewController: UIViewController {
         // クルクルをStopした時に非表示にする
         ActivityIndicator.hidesWhenStopped = true
         // 色を設定
-        ActivityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+        ActivityIndicator.style = UIActivityIndicatorView.Style.gray
         // Viewに追加
         self.view.addSubview(ActivityIndicator)
     }
@@ -60,9 +60,11 @@ class SignInViewController: UIViewController {
     
     // 画面遷移用
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        DispatchQueue.main.async {
         if (segue.identifier == "toMotionCaptureViewController") {
             let mcvc: MotionCaptureViewController = (segue.destination as? MotionCaptureViewController)!
             mcvc.textMCVC = self.username.text!
+        }
         }
     }
     
@@ -89,10 +91,11 @@ class SignInViewController: UIViewController {
                     alertController.addAction(retryAction)
                     self.present(alertController, animated: true, completion:  nil)
                 } else {
-                    // クルクルストップ
                     print("ログイン成功")
-                    self.performSegue(withIdentifier: "toMotionCaptureViewController",sender: nil)
-                    self.ActivityIndicator.stopAnimating()
+                    DispatchQueue.main.async {
+                        self.performSegue(withIdentifier: "toMotionCaptureViewController",sender: nil)
+                        self.ActivityIndicator.stopAnimating()
+                    }
                 }
                 return task
             })
