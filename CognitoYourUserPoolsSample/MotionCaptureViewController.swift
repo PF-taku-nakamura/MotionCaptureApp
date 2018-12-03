@@ -9,6 +9,8 @@
 import UIKit
 import AVFoundation
 import Photos
+import AWSCore
+import AWSS3
 
 class MotionCaptureViewController: UIViewController {
     
@@ -82,7 +84,7 @@ class MotionCaptureViewController: UIViewController {
         self.fileOutput = AVCaptureMovieFileOutput()
         self.captureSession.canAddOutput(self.fileOutput!)
         self.captureSession.addOutput(self.fileOutput!)
-        self.captureSession.sessionPreset = AVCaptureSession.Preset.hd4K3840x2160
+        //self.captureSession.sessionPreset = AVCaptureSession.Preset.hd4K3840x2160
 
         // プレビュー(撮影している映像を表示するための画面)
         let videoLayer = AVCaptureVideoPreviewLayer(session: captureSession)
@@ -105,6 +107,19 @@ class MotionCaptureViewController: UIViewController {
             self.ActivityIndicator.startAnimating()
 
             DispatchQueue.global(qos: .userInitiated).async {
+                // setup S3 configuration
+                let credentialsProvider = AWSCognitoCredentialsProvider(regionType: .APNortheast1, identityPoolId: "ap-northeast-1:0b87cb12-8ca5-431b-9866-b964b04f65a2")
+                let configuration = AWSServiceConfiguration(region: .APNortheast1, credentialsProvider: credentialsProvider)
+                AWSServiceManager.default().defaultServiceConfiguration = configuration
+                let request = AWSS3TransferManagerUploadRequest()
+                request?.bucket="poc-motioncapture-app"
+                request?.key="input/\(Date().timeIntervalSince1970).mov"
+                request?.body = self.motionCaptureVideoFileURL!
+                AWSS3TransferManager.default().upload(request!)
+                print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+                print(self.motionCaptureVideoFileURL!)
+                print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+                // クルクルの終了
                 self.captureSession.stopRunning()
             }
         }

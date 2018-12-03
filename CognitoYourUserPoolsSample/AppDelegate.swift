@@ -16,6 +16,7 @@
 //
 
 import UIKit
+import AWSCore
 import AWSCognitoIdentityProvider
 
 @UIApplicationMain

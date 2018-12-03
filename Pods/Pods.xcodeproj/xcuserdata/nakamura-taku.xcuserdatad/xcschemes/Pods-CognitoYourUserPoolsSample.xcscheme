@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1010"
+   LastUpgradeVersion = "0930"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "BEDA67D4D89DB2C26660FCE95DC64641"
+               BlueprintIdentifier = "74795EDDF6E1AC7DB46BFA2A324AFE8A"
                BuildableName = "Pods_CognitoYourUserPoolsSample.framework"
                BlueprintName = "Pods-CognitoYourUserPoolsSample"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "BEDA67D4D89DB2C26660FCE95DC64641"
+            BlueprintIdentifier = "74795EDDF6E1AC7DB46BFA2A324AFE8A"
             BuildableName = "Pods_CognitoYourUserPoolsSample.framework"
             BlueprintName = "Pods-CognitoYourUserPoolsSample"
             ReferencedContainer = "container:Pods.xcodeproj">
