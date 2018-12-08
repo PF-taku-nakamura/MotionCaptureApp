@@ -113,11 +113,12 @@ class MotionCaptureViewController: UIViewController {
                 AWSServiceManager.default().defaultServiceConfiguration = configuration
                 let request = AWSS3TransferManagerUploadRequest()
                 request?.bucket="poc-motioncapture-app"
-                request?.key="input/\(Date().timeIntervalSince1970).mov"
+                request?.key = "input/\(self.motionCaptureVideoFileURL!.lastPathComponent)"
                 request?.body = self.motionCaptureVideoFileURL!
                 AWSS3TransferManager.default().upload(request!)
                 print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
                 print(self.motionCaptureVideoFileURL!)
+                print("input/\(self.motionCaptureVideoFileURL!.lastPathComponent)")
                 print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
                 // クルクルの終了
                 self.captureSession.stopRunning()
@@ -194,8 +195,10 @@ extension MotionCaptureViewController: AVCaptureFileOutputRecordingDelegate {
             PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: outputFileURL)
         }) { completed, error in
             if completed {
-                self.ActivityIndicator.stopAnimating()
-                print("Video is saved!")
+                DispatchQueue.main.async {
+                    self.ActivityIndicator.stopAnimating()
+                    print("Video is saved!")
+                }
             }
         }
     }
