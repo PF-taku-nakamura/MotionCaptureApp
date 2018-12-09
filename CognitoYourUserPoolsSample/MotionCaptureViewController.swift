@@ -11,6 +11,7 @@ import AVFoundation
 import Photos
 import AWSCore
 import AWSS3
+import AWSMobileClient
 
 class MotionCaptureViewController: UIViewController {
     
@@ -33,6 +34,14 @@ class MotionCaptureViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Cognitoの認証データを取得
+        AWSMobileClient.sharedInstance().initialize { (userState, error) in
+            if let userState = userState {
+                print("UserState: \(userState.rawValue)")
+            } else if let error = error {
+                print("error: \(error.localizedDescription)")
+            }
+        }
         // ActivityIndicatorを作成&中央に配置
         ActivityIndicator = UIActivityIndicatorView()
         ActivityIndicator.backgroundColor = .lightGray
@@ -105,24 +114,8 @@ class MotionCaptureViewController: UIViewController {
         if self.isRecoding { // 録画終了
             self.fileOutput?.stopRecording()
             self.ActivityIndicator.startAnimating()
-
-            DispatchQueue.global(qos: .userInitiated).async {
-                // setup S3 configuration
-                let credentialsProvider = AWSCognitoCredentialsProvider(regionType: .APNortheast1, identityPoolId: "ap-northeast-1:0b87cb12-8ca5-431b-9866-b964b04f65a2")
-                let configuration = AWSServiceConfiguration(region: .APNortheast1, credentialsProvider: credentialsProvider)
-                AWSServiceManager.default().defaultServiceConfiguration = configuration
-                let request = AWSS3TransferManagerUploadRequest()
-                request?.bucket="poc-motioncapture-app"
-                request?.key = "input/\(self.motionCaptureVideoFileURL!.lastPathComponent)"
-                request?.body = self.motionCaptureVideoFileURL!
-                AWSS3TransferManager.default().upload(request!)
-                print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
-                print(self.motionCaptureVideoFileURL!)
-                print("input/\(self.motionCaptureVideoFileURL!.lastPathComponent)")
-                print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
-                // クルクルの終了
-                self.captureSession.stopRunning()
-            }
+            
+            uploadVideo()
         }
         else{ // 録画開始
 
@@ -136,6 +129,46 @@ class MotionCaptureViewController: UIViewController {
 }
 
 extension MotionCaptureViewController: AVCaptureFileOutputRecordingDelegate {
+    
+    func uploadVideo(){
+        // setup S3 configuration
+        let credentialsProvider = AWSCognitoCredentialsProvider(regionType: .APNortheast1, identityPoolId: "ap-northeast-1:0b87cb12-8ca5-431b-9866-b964b04f65a2")
+        let configuration = AWSServiceConfiguration(region: .APNortheast1, credentialsProvider: credentialsProvider)
+        AWSServiceManager.default().defaultServiceConfiguration = configuration
+        // File to be uploaded
+        let url = self.motionCaptureVideoFileURL!
+        let expression = AWSS3TransferUtilityUploadExpression()
+        expression.progressBlock = {(task, progress) in
+            DispatchQueue.main.async(execute: {
+                // Do something e.g. Update a progress bar.
+            })
+        }
+        var completionHandler: AWSS3TransferUtilityUploadCompletionHandlerBlock?
+        completionHandler = { (task, error) -> Void in
+            DispatchQueue.main.async(execute: {
+                // クルクルの終了
+                self.captureSession.stopRunning()
+                // Do something e.g. Alert a user for transfer completion.
+                // On failed uploads, `error` contains the error object.
+            })
+        }
+        let transferUtility = AWSS3TransferUtility.default()
+        transferUtility.uploadFile(url,
+                                   bucket: "poc-motioncapture-app",
+                                   key: "input/\(self.motionCaptureVideoFileURL!.lastPathComponent)",
+                                   contentType: "video/quicktime",
+                                   expression: expression,
+                                   completionHandler: completionHandler).continueWith {
+                                    (task) -> AnyObject? in
+                                    if let error = task.error {
+                                        print("Error: \(error.localizedDescription)")
+                                    }
+                                    if let _ = task.result {
+                                        // Do something with uploadTask.
+                                    }
+                                    return nil;
+        }
+    }
 
     func setMaxFps(maxFps: Double) {
         // fpsを上げるためのルーチン
