@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "74795EDDF6E1AC7DB46BFA2A324AFE8A"
+               BlueprintIdentifier = "F4FE7EB3E9BC36407B65DB5C20994AA9"
                BuildableName = "Pods_CognitoYourUserPoolsSample.framework"
                BlueprintName = "Pods-CognitoYourUserPoolsSample"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "74795EDDF6E1AC7DB46BFA2A324AFE8A"
+            BlueprintIdentifier = "F4FE7EB3E9BC36407B65DB5C20994AA9"
             BuildableName = "Pods_CognitoYourUserPoolsSample.framework"
             BlueprintName = "Pods-CognitoYourUserPoolsSample"
             ReferencedContainer = "container:Pods.xcodeproj">
