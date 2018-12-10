@@ -17,11 +17,16 @@ class MotionCaptureViewController: UIViewController {
     
     @IBOutlet weak var videoView: UIView!
     @IBOutlet weak var startStopButton: UIButton!
+    @IBOutlet weak var showFpsLabel: UILabel!
+    @IBOutlet weak var changeFpsButton: UISegmentedControl!
+    
+    // 動画情報の表示
     
     var isRecoding = false
     var fileOutput: AVCaptureMovieFileOutput?
     var isBackCamera: Bool = true
     var textMCVC: String?
+    var decidedFps: Double? = 30.0
     // 処理中のクルクル
     var ActivityIndicator: UIActivityIndicatorView!
     
@@ -53,6 +58,14 @@ class MotionCaptureViewController: UIViewController {
         ActivityIndicator.style = UIActivityIndicatorView.Style.gray
         // Viewに追加
         self.view.addSubview(ActivityIndicator)
+        
+        // FPSの表示
+        // 表示内容の初期化
+        self.showFpsLabel.text="---"
+        //表示可能最大行数を指定
+        self.showFpsLabel.numberOfLines = 0
+        
+        // カメラの起動
         setupCamera(isBack: self.isBackCamera)
     }
 
@@ -78,12 +91,10 @@ class MotionCaptureViewController: UIViewController {
         do{
             let videoInput = try AVCaptureDeviceInput(device: videoDevice!) as AVCaptureDeviceInput
             self.captureSession.addInput(videoInput)
-            setMaxFps(maxFps: 120.0)
+            setMaxFps(maxFps: self.decidedFps!)
         }catch let error as NSError{
             print(error)
         }
-        // FPSの設定
-        setMaxFps(maxFps: 120.0)
 
         // 入力（音声を録音するマイク）
         let audioDevice = AVCaptureDevice.default(for: AVMediaType.audio)
@@ -113,8 +124,7 @@ class MotionCaptureViewController: UIViewController {
     @IBAction func tapStartStopButton(_ sender: Any) {
         if self.isRecoding { // 録画終了
             self.fileOutput?.stopRecording()
-            self.ActivityIndicator.startAnimating()
-            
+            // アップロード
             uploadVideo()
         }
         else{ // 録画開始
@@ -125,12 +135,34 @@ class MotionCaptureViewController: UIViewController {
             self.fileOutput?.startRecording(to: self.motionCaptureVideoFileURL!, recordingDelegate: self as AVCaptureFileOutputRecordingDelegate)
         }
     }
-
+    
+    @IBAction func selectChangeFpsButton(_ sender: UISegmentedControl) {
+        //セグメント番号で条件分岐させる
+        switch sender.selectedSegmentIndex {
+        case 0:
+            self.decidedFps=30.0
+            setMaxFps(maxFps: self.decidedFps!)
+        case 1:
+            self.decidedFps=60.0
+            setMaxFps(maxFps: self.decidedFps!)
+        case 2:
+            self.decidedFps=120.0
+            setMaxFps(maxFps: self.decidedFps!)
+        default:
+            self.decidedFps=240.0
+            setMaxFps(maxFps: self.decidedFps!)
+        }
+    }
+    
 }
 
 extension MotionCaptureViewController: AVCaptureFileOutputRecordingDelegate {
     
     func uploadVideo(){
+        // 処理中のクルクルスタート
+        DispatchQueue.main.async(execute: {
+            self.ActivityIndicator.startAnimating()
+        })
         // setup S3 configuration
         let credentialsProvider = AWSCognitoCredentialsProvider(regionType: .APNortheast1, identityPoolId: "ap-northeast-1:0b87cb12-8ca5-431b-9866-b964b04f65a2")
         let configuration = AWSServiceConfiguration(region: .APNortheast1, credentialsProvider: credentialsProvider)
@@ -176,6 +208,7 @@ extension MotionCaptureViewController: AVCaptureFileOutputRecordingDelegate {
         var minFPS = 0.0
         var maxFPS = maxFps
         var maxWidth:Int32 = 0
+        var maxHeight:Int32 = 0
         var selectedFormat:AVCaptureDevice.Format? = nil
         // セッションが始動中なら止める
         if isRecoding {
@@ -188,12 +221,15 @@ extension MotionCaptureViewController: AVCaptureFileOutputRecordingDelegate {
                 let desc = format.formatDescription
                 let dimentions = CMVideoFormatDescriptionGetDimensions(desc)
                 print("フォーマット情報： \(desc)")
+                print("min:\(range.minFrameRate),max:\(range.maxFrameRate),maxWidth:\(dimentions.width),maxHeight:\(dimentions.height)")
                 
-                if(minFPS <= range.minFrameRate && maxFPS <= range.maxFrameRate && maxWidth <= dimentions.width){
+                if(minFPS <= range.minFrameRate && maxFPS == range.maxFrameRate && maxWidth <= dimentions.width){
                     minFPS = range.minFrameRate
                     maxFPS = range.maxFrameRate
                     maxWidth = dimentions.width
+                    maxHeight = dimentions.height
                     selectedFormat = format
+                    print("更新！！")
                 }
             }
         }
@@ -205,6 +241,9 @@ extension MotionCaptureViewController: AVCaptureFileOutputRecordingDelegate {
                 self.videoDevice?.activeVideoMaxFrameDuration = CMTimeMake(value: 1,timescale: Int32(maxFPS))
                 self.videoDevice?.unlockForConfiguration()
                 print("フォーマット・フレームレートを設定 : \(maxFPS) fps・\(maxWidth) px")
+                self.showFpsLabel.text="FPS: \(maxFPS)\nImage Quality: \(maxWidth)*\(maxHeight)"
+                //contentsのサイズに合わせてobujectのサイズを変える
+                self.showFpsLabel.sizeToFit()
             }catch{
                 print("フォーマット・フレームレートが指定できなかった")
             }

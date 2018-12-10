@@ -297,6 +297,25 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Vd-ui-YJK">
+                                <rect key="frame" x="10" y="60" width="300" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="BIb-kH-TyW">
+                                <rect key="frame" x="81.5" y="825" width="251" height="29"/>
+                                <segments>
+                                    <segment title="30FPS"/>
+                                    <segment title="60FPS"/>
+                                    <segment title="120FPS"/>
+                                    <segment title="240FPS"/>
+                                </segments>
+                                <connections>
+                                    <action selector="selectChangeFpsButton:" destination="cj3-qa-G2h" eventType="valueChanged" id="zGw-P1-XFx"/>
+                                </connections>
+                            </segmentedControl>
                             <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hyj-5C-47c">
                                 <rect key="frame" x="143" y="684" width="128" height="128"/>
                                 <state key="normal" image="takeButton.png"/>
@@ -309,10 +328,12 @@
                         <constraints>
                             <constraint firstItem="61s-JO-2c2" firstAttribute="leading" secondItem="3n3-nt-5cP" secondAttribute="leading" id="1WN-1c-5F2"/>
                             <constraint firstItem="61s-JO-2c2" firstAttribute="top" secondItem="3n3-nt-5cP" secondAttribute="top" id="2PT-Vs-yOO"/>
+                            <constraint firstItem="dcM-ma-Yl9" firstAttribute="top" secondItem="BIb-kH-TyW" secondAttribute="bottom" constant="9" id="6Lz-WR-p63"/>
                             <constraint firstItem="Hyj-5C-47c" firstAttribute="centerX" secondItem="61s-JO-2c2" secondAttribute="centerX" id="ASl-AZ-zSK"/>
                             <constraint firstAttribute="trailing" secondItem="61s-JO-2c2" secondAttribute="trailing" id="FCr-40-wCw"/>
                             <constraint firstItem="dcM-ma-Yl9" firstAttribute="top" secondItem="61s-JO-2c2" secondAttribute="bottom" id="GH7-Nq-SVx"/>
                             <constraint firstItem="dcM-ma-Yl9" firstAttribute="top" secondItem="Hyj-5C-47c" secondAttribute="bottom" constant="50" id="JMa-Gi-iVy"/>
+                            <constraint firstItem="BIb-kH-TyW" firstAttribute="centerX" secondItem="Hyj-5C-47c" secondAttribute="centerX" id="M46-bx-gh9"/>
                             <constraint firstAttribute="trailing" secondItem="61s-JO-2c2" secondAttribute="trailing" id="aA5-sM-sSy"/>
                             <constraint firstItem="61s-JO-2c2" firstAttribute="top" secondItem="3n3-nt-5cP" secondAttribute="top" id="f61-bH-iwc"/>
                             <constraint firstItem="61s-JO-2c2" firstAttribute="leading" secondItem="3n3-nt-5cP" secondAttribute="leading" id="hcI-Cp-Qcg"/>
@@ -320,13 +341,15 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="changeFpsButton" destination="BIb-kH-TyW" id="l62-yy-wG9"/>
+                        <outlet property="showFpsLabel" destination="0Vd-ui-YJK" id="A3T-ii-c8Y"/>
                         <outlet property="startStopButton" destination="Hyj-5C-47c" id="2bY-eG-tOj"/>
                         <outlet property="videoView" destination="61s-JO-2c2" id="zl1-mu-sF2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YIf-0c-8to" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="322.39999999999998" y="-737.4384236453202"/>
+            <point key="canvasLocation" x="321.73913043478262" y="-737.94642857142856"/>
         </scene>
         <!--SignUp-->
         <scene sceneID="be2-Yb-YLI">
