@@ -199,6 +199,7 @@ extension MotionCaptureViewController: AVCaptureFileOutputRecordingDelegate {
                 let desc = format.formatDescription
                 let dimentions = CMVideoFormatDescriptionGetDimensions(desc)
                 print("フォーマット情報： \(desc)")
+                print("min:\(range.minFrameRate),max:\(range.maxFrameRate),maxWidth:\(dimentions.width),maxHeight:\(dimentions.height)")
                 
                 if(minFPS <= range.minFrameRate && maxFPS <= range.maxFrameRate && maxWidth <= dimentions.width){
                     minFPS = range.minFrameRate

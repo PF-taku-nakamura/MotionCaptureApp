@@ -304,6 +304,15 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="BIb-kH-TyW">
+                                <rect key="frame" x="81.5" y="825" width="251" height="29"/>
+                                <segments>
+                                    <segment title="30FPS"/>
+                                    <segment title="60FPS"/>
+                                    <segment title="120FPS"/>
+                                    <segment title="240FPS"/>
+                                </segments>
+                            </segmentedControl>
                             <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hyj-5C-47c">
                                 <rect key="frame" x="143" y="684" width="128" height="128"/>
                                 <state key="normal" image="takeButton.png"/>
@@ -316,10 +325,12 @@
                         <constraints>
                             <constraint firstItem="61s-JO-2c2" firstAttribute="leading" secondItem="3n3-nt-5cP" secondAttribute="leading" id="1WN-1c-5F2"/>
                             <constraint firstItem="61s-JO-2c2" firstAttribute="top" secondItem="3n3-nt-5cP" secondAttribute="top" id="2PT-Vs-yOO"/>
+                            <constraint firstItem="dcM-ma-Yl9" firstAttribute="top" secondItem="BIb-kH-TyW" secondAttribute="bottom" constant="9" id="6Lz-WR-p63"/>
                             <constraint firstItem="Hyj-5C-47c" firstAttribute="centerX" secondItem="61s-JO-2c2" secondAttribute="centerX" id="ASl-AZ-zSK"/>
                             <constraint firstAttribute="trailing" secondItem="61s-JO-2c2" secondAttribute="trailing" id="FCr-40-wCw"/>
                             <constraint firstItem="dcM-ma-Yl9" firstAttribute="top" secondItem="61s-JO-2c2" secondAttribute="bottom" id="GH7-Nq-SVx"/>
                             <constraint firstItem="dcM-ma-Yl9" firstAttribute="top" secondItem="Hyj-5C-47c" secondAttribute="bottom" constant="50" id="JMa-Gi-iVy"/>
+                            <constraint firstItem="BIb-kH-TyW" firstAttribute="centerX" secondItem="Hyj-5C-47c" secondAttribute="centerX" id="M46-bx-gh9"/>
                             <constraint firstAttribute="trailing" secondItem="61s-JO-2c2" secondAttribute="trailing" id="aA5-sM-sSy"/>
                             <constraint firstItem="61s-JO-2c2" firstAttribute="top" secondItem="3n3-nt-5cP" secondAttribute="top" id="f61-bH-iwc"/>
                             <constraint firstItem="61s-JO-2c2" firstAttribute="leading" secondItem="3n3-nt-5cP" secondAttribute="leading" id="hcI-Cp-Qcg"/>
