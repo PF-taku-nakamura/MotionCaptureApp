@@ -10,5 +10,4 @@ target 'CognitoYourUserPoolsSample' do
     pod 'SSZipArchive'
     pod 'AWSCognito'
     pod 'AWSS3'
-    pod 'GDPerformanceView-Swift'
 end
