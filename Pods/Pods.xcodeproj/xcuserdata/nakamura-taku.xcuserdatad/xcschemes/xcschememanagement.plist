@@ -53,19 +53,26 @@
 			<key>orderHint</key>
 			<integer>6</integer>
 		</dict>
-		<key>Pods-CognitoYourUserPoolsSample.xcscheme</key>
+		<key>GDPerformanceView-Swift.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>7</integer>
 		</dict>
-		<key>SSZipArchive.xcscheme</key>
+		<key>Pods-CognitoYourUserPoolsSample.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>8</integer>
+		</dict>
+		<key>SSZipArchive.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>9</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>

@@ -297,6 +297,13 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Vd-ui-YJK">
+                                <rect key="frame" x="10" y="60" width="300" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hyj-5C-47c">
                                 <rect key="frame" x="143" y="684" width="128" height="128"/>
                                 <state key="normal" image="takeButton.png"/>
@@ -320,13 +327,14 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="showFpsLabel" destination="0Vd-ui-YJK" id="A3T-ii-c8Y"/>
                         <outlet property="startStopButton" destination="Hyj-5C-47c" id="2bY-eG-tOj"/>
                         <outlet property="videoView" destination="61s-JO-2c2" id="zl1-mu-sF2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YIf-0c-8to" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="322.39999999999998" y="-737.4384236453202"/>
+            <point key="canvasLocation" x="321.73913043478262" y="-737.94642857142856"/>
         </scene>
         <!--SignUp-->
         <scene sceneID="be2-Yb-YLI">

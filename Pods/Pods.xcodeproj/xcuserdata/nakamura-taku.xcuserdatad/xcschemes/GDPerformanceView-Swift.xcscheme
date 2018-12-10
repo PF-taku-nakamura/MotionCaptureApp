@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A658040B133429B8D7DAF97011DEEE44"
-               BuildableName = "Pods_CognitoYourUserPoolsSample.framework"
-               BlueprintName = "Pods-CognitoYourUserPoolsSample"
+               BlueprintIdentifier = "9746AE2A4265E7A77E3471E9E72BAE79"
+               BuildableName = "GDPerformanceView_Swift.framework"
+               BlueprintName = "GDPerformanceView-Swift"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,9 +45,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A658040B133429B8D7DAF97011DEEE44"
-            BuildableName = "Pods_CognitoYourUserPoolsSample.framework"
-            BlueprintName = "Pods-CognitoYourUserPoolsSample"
+            BlueprintIdentifier = "9746AE2A4265E7A77E3471E9E72BAE79"
+            BuildableName = "GDPerformanceView_Swift.framework"
+            BlueprintName = "GDPerformanceView-Swift"
             ReferencedContainer = "container:Pods.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

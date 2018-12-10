@@ -17,6 +17,8 @@ class MotionCaptureViewController: UIViewController {
     
     @IBOutlet weak var videoView: UIView!
     @IBOutlet weak var startStopButton: UIButton!
+    @IBOutlet weak var showFpsLabel: UILabel!
+    // 動画情報の表示
     
     var isRecoding = false
     var fileOutput: AVCaptureMovieFileOutput?
@@ -53,6 +55,14 @@ class MotionCaptureViewController: UIViewController {
         ActivityIndicator.style = UIActivityIndicatorView.Style.gray
         // Viewに追加
         self.view.addSubview(ActivityIndicator)
+        
+        // FPSの表示
+        // 表示内容の初期化
+        self.showFpsLabel.text="---"
+        //表示可能最大行数を指定
+        self.showFpsLabel.numberOfLines = 0
+        
+        // カメラの起動
         setupCamera(isBack: self.isBackCamera)
     }
 
@@ -176,6 +186,7 @@ extension MotionCaptureViewController: AVCaptureFileOutputRecordingDelegate {
         var minFPS = 0.0
         var maxFPS = maxFps
         var maxWidth:Int32 = 0
+        var maxHeight:Int32 = 0
         var selectedFormat:AVCaptureDevice.Format? = nil
         // セッションが始動中なら止める
         if isRecoding {
@@ -193,6 +204,7 @@ extension MotionCaptureViewController: AVCaptureFileOutputRecordingDelegate {
                     minFPS = range.minFrameRate
                     maxFPS = range.maxFrameRate
                     maxWidth = dimentions.width
+                    maxHeight = dimentions.height
                     selectedFormat = format
                 }
             }
@@ -205,6 +217,9 @@ extension MotionCaptureViewController: AVCaptureFileOutputRecordingDelegate {
                 self.videoDevice?.activeVideoMaxFrameDuration = CMTimeMake(value: 1,timescale: Int32(maxFPS))
                 self.videoDevice?.unlockForConfiguration()
                 print("フォーマット・フレームレートを設定 : \(maxFPS) fps・\(maxWidth) px")
+                self.showFpsLabel.text="FPS: \(maxFPS)\nImage Quality: \(maxWidth)*\(maxHeight)"
+                //contentsのサイズに合わせてobujectのサイズを変える
+                self.showFpsLabel.sizeToFit()
             }catch{
                 print("フォーマット・フレームレートが指定できなかった")
             }
