@@ -312,6 +312,9 @@
                                     <segment title="120FPS"/>
                                     <segment title="240FPS"/>
                                 </segments>
+                                <connections>
+                                    <action selector="selectChangeFpsButton:" destination="cj3-qa-G2h" eventType="valueChanged" id="zGw-P1-XFx"/>
+                                </connections>
                             </segmentedControl>
                             <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hyj-5C-47c">
                                 <rect key="frame" x="143" y="684" width="128" height="128"/>
@@ -338,6 +341,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="changeFpsButton" destination="BIb-kH-TyW" id="l62-yy-wG9"/>
                         <outlet property="showFpsLabel" destination="0Vd-ui-YJK" id="A3T-ii-c8Y"/>
                         <outlet property="startStopButton" destination="Hyj-5C-47c" id="2bY-eG-tOj"/>
                         <outlet property="videoView" destination="61s-JO-2c2" id="zl1-mu-sF2"/>
