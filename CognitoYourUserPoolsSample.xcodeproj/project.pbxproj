@@ -27,6 +27,7 @@
 		B04E58FF21B2E71700042038 /* takeButton.png in Resources */ = {isa = PBXBuildFile; fileRef = B04E58FE21B2E71700042038 /* takeButton.png */; };
 		B095555121BE9EDB00883912 /* compass.png in Resources */ = {isa = PBXBuildFile; fileRef = B095555021BE9EDA00883912 /* compass.png */; };
 		B095555321BEA1B700883912 /* AttitudeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B095555221BEA1B700883912 /* AttitudeViewController.swift */; };
+		B095555521BED49900883912 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = B095555421BED49800883912 /* back.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +54,7 @@
 		B04E58FE21B2E71700042038 /* takeButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = takeButton.png; sourceTree = "<group>"; };
 		B095555021BE9EDA00883912 /* compass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = compass.png; sourceTree = "<group>"; };
 		B095555221BEA1B700883912 /* AttitudeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttitudeViewController.swift; sourceTree = "<group>"; };
+		B095555421BED49800883912 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
 		DBEB9BB4F88788184F7DD583 /* Pods-CognitoYourUserPoolsSample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CognitoYourUserPoolsSample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CognitoYourUserPoolsSample/Pods-CognitoYourUserPoolsSample.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -117,6 +119,7 @@
 				B04E58FE21B2E71700042038 /* takeButton.png */,
 				17FC2F911E25908D00174015 /* CognitoLogo.png */,
 				B095555021BE9EDA00883912 /* compass.png */,
+				B095555421BED49800883912 /* back.png */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -204,6 +207,7 @@
 				17FC2F8A1E258FC500174015 /* LaunchScreen.storyboard in Resources */,
 				17FC2F871E258FC500174015 /* Assets.xcassets in Resources */,
 				17FC2F921E25908D00174015 /* CognitoLogo.png in Resources */,
+				B095555521BED49900883912 /* back.png in Resources */,
 				B095555121BE9EDB00883912 /* compass.png in Resources */,
 				17FC2F851E258FC500174015 /* Main.storyboard in Resources */,
 				17FC2F951E2590D800174015 /* MFAViewController.xib in Resources */,
