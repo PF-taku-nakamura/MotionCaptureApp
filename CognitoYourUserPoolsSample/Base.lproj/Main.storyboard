@@ -385,17 +385,27 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PiY-ma-8DT">
+                                <rect key="frame" x="10" y="340" width="300" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="mT8-b4-8KP" firstAttribute="top" secondItem="MaZ-j8-Vza" secondAttribute="bottom" constant="36" id="1Y8-J1-YcD"/>
                             <constraint firstItem="MaZ-j8-Vza" firstAttribute="leading" secondItem="d71-oj-vhP" secondAttribute="leading" constant="10" id="6fI-an-UCi"/>
                             <constraint firstItem="MaZ-j8-Vza" firstAttribute="top" secondItem="d71-oj-vhP" secondAttribute="top" constant="50" id="9JB-4O-iAv"/>
+                            <constraint firstItem="PiY-ma-8DT" firstAttribute="leading" secondItem="mT8-b4-8KP" secondAttribute="leading" id="Kwl-Br-L74"/>
                             <constraint firstAttribute="trailingMargin" secondItem="mT8-b4-8KP" secondAttribute="trailing" constant="84" id="RGJ-pH-3hU"/>
                             <constraint firstItem="mT8-b4-8KP" firstAttribute="leading" secondItem="MaZ-j8-Vza" secondAttribute="leading" id="XdD-vk-XKr"/>
+                            <constraint firstItem="PiY-ma-8DT" firstAttribute="trailing" secondItem="mT8-b4-8KP" secondAttribute="trailing" id="bmy-ss-Ra6"/>
+                            <constraint firstItem="oor-2Y-rCf" firstAttribute="top" secondItem="PiY-ma-8DT" secondAttribute="bottom" constant="501" id="rHF-kh-r7j"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="acceleration_EMA" destination="PiY-ma-8DT" id="33X-sz-NRo"/>
                         <outlet property="acceleration_raw" destination="mT8-b4-8KP" id="jEF-vy-VeX"/>
                     </connections>
                 </viewController>
