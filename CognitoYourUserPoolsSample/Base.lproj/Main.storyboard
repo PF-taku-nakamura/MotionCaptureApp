@@ -363,7 +363,7 @@
         <!--Attitude View Controller-->
         <scene sceneID="L0z-R5-uc4">
             <objects>
-                <viewController id="Evn-jR-oAA" customClass="AttitudeViewController" customModule="CognitoYourUserPoolsSample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Evn-jR-oAA" customClass="AttitudeViewController" customModule="CognitoYourUserPoolsSample" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="PqQ-Dm-8uK"/>
                         <viewControllerLayoutGuide type="bottom" id="oor-2Y-rCf"/>
@@ -379,17 +379,29 @@
                                     <segue destination="cj3-qa-G2h" kind="presentation" identifier="toMotionCaptureViewController" id="3WV-mk-bcO"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mT8-b4-8KP">
+                                <rect key="frame" x="10" y="150" width="300" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="mT8-b4-8KP" firstAttribute="top" secondItem="MaZ-j8-Vza" secondAttribute="bottom" constant="36" id="1Y8-J1-YcD"/>
                             <constraint firstItem="MaZ-j8-Vza" firstAttribute="leading" secondItem="d71-oj-vhP" secondAttribute="leading" constant="10" id="6fI-an-UCi"/>
                             <constraint firstItem="MaZ-j8-Vza" firstAttribute="top" secondItem="d71-oj-vhP" secondAttribute="top" constant="50" id="9JB-4O-iAv"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="mT8-b4-8KP" secondAttribute="trailing" constant="84" id="RGJ-pH-3hU"/>
+                            <constraint firstItem="mT8-b4-8KP" firstAttribute="leading" secondItem="MaZ-j8-Vza" secondAttribute="leading" id="XdD-vk-XKr"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="acceleration_raw" destination="mT8-b4-8KP" id="jEF-vy-VeX"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2dv-HN-SyL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1310" y="-738"/>
+            <point key="canvasLocation" x="1308.6956521739132" y="-738.61607142857144"/>
         </scene>
         <!--SignUp-->
         <scene sceneID="be2-Yb-YLI">
@@ -489,7 +501,6 @@
                             <constraint firstAttribute="trailingMargin" secondItem="yJN-sh-wk7" secondAttribute="trailing" constant="1" id="7us-T3-HbW"/>
                             <constraint firstItem="vlW-ds-11L" firstAttribute="leading" secondItem="tEF-He-C0S" secondAttribute="leadingMargin" constant="-1" id="84l-pO-Dcc"/>
                             <constraint firstItem="Ozv-Iw-42u" firstAttribute="leading" secondItem="T45-ud-e5k" secondAttribute="leading" id="8V8-47-cgy"/>
-                            <constraint firstItem="Ozv-Iw-42u" firstAttribute="top" secondItem="tEF-He-C0S" secondAttribute="top" constant="95" id="APu-Qf-j3F"/>
                             <constraint firstAttribute="trailingMargin" secondItem="vlW-ds-11L" secondAttribute="trailing" constant="1" id="CQe-SQ-Hqa"/>
                             <constraint firstItem="L92-OD-AWi" firstAttribute="top" secondItem="WyZ-BE-297" secondAttribute="bottom" constant="13" id="EKk-9S-DG3"/>
                             <constraint firstItem="T45-ud-e5k" firstAttribute="top" secondItem="Ozv-Iw-42u" secondAttribute="bottom" constant="3" id="FI5-Cr-VcV"/>

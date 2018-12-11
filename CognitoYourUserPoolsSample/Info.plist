@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSMotionUsageDescription</key>
+	<string>姿勢を取るのにセンサを使わせてください</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>撮影するのに音声を使わせてください</string>
 	<key>NSPhotoLibraryUsageDescription</key>
