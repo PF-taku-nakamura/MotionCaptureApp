@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreMotion
+import SceneKit
 
 class AttitudeViewController: UIViewController {
     
@@ -16,7 +17,6 @@ class AttitudeViewController: UIViewController {
     var acceleration_EMA_Y: Double? = 0.0
     var acceleration_EMA_Z: Double? = 0.0
     let Alpha = 0.4
-    //
     
     // MotionManager
     let motionManager = CMMotionManager()
@@ -27,6 +27,7 @@ class AttitudeViewController: UIViewController {
     @IBOutlet weak var geomagnetism_raw: UILabel! // 生地磁気
     @IBOutlet weak var gyroscope_raw: UILabel! // 生ジャイロ
     @IBOutlet weak var attitude_raw: UILabel! // ヨーピッチロール
+    @IBOutlet weak var attitude_view: SCNView! // ヨーピッチロールを表示するView
     
     
     override func viewDidLoad() {
@@ -72,7 +73,20 @@ class AttitudeViewController: UIViewController {
                 withHandler: {(motionData:CMDeviceMotion?, errorOC: Error?) in self.outputAttitudeData(attitude: motionData!.attitude)
             })
         }
-        // Do any additional setup after loading the view.
+        
+        // ヨーピッチロールの可視化
+        // シーン設定
+        let scene = GameScene()
+        // SCNView設定
+        let scnView = self.attitude_view!
+        scnView.scene = scene
+        scnView.backgroundColor = UIColor.red
+        scnView.showsStatistics = true
+        scnView.allowsCameraControl = true
+        // タップジェスチャー
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+        scnView.addGestureRecognizer(tapGesture)
+        
     }
     
     func outputAccelData(acceleration: CMAcceleration){
@@ -113,6 +127,14 @@ class AttitudeViewController: UIViewController {
         if(motionManager.isAccelerometerActive){
             motionManager.stopAccelerometerUpdates()
         }
+    }
+    
+    // ヨーピッチロールの可視化
+    @objc func handleTap(_ gestureRecognize: UIGestureRecognizer){
+        print("タップされました")
+        let d = 50 * (Float.pi / 180)
+        self.attitude_view.scene?.rootNode.eulerAngles = SCNVector3(d, d, 0)
+
     }
     
     override func didReceiveMemoryWarning() {
