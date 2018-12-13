@@ -17,6 +17,10 @@ class AttitudeViewController: UIViewController {
     var acceleration_EMA_Y: Double? = 0.0
     var acceleration_EMA_Z: Double? = 0.0
     let Alpha = 0.4
+    // ヨーピッチロールの値を一時的に保存
+    var attitude_yaw: Double? = 0.0
+    var attitude_pitch: Double? = 0.0
+    var attitude_roll: Double? = 0.0
     
     // MotionManager
     let motionManager = CMMotionManager()
@@ -120,6 +124,10 @@ class AttitudeViewController: UIViewController {
     func outputAttitudeData(attitude: CMAttitude){
         // ヨーピッチロール
         self.attitude_raw.text = "Yaw: \(String(format: "%06f", attitude.yaw))\nPitch: \(String(format: "%06f", attitude.pitch))\nRoll: \(String(format: "%06f", attitude.roll))"
+        self.attitude_yaw=attitude.yaw
+        self.attitude_pitch=attitude.pitch
+        self.attitude_roll=(-1.0)*attitude.roll
+        //self.attitude_view.scene?.rootNode.eulerAngles = SCNVector3(attitude.roll, attitude.pitch, attitude.yaw)
     }
     
     // センサー取得を止める関数
@@ -132,8 +140,9 @@ class AttitudeViewController: UIViewController {
     // ヨーピッチロールの可視化
     @objc func handleTap(_ gestureRecognize: UIGestureRecognizer){
         print("タップされました")
-        let d = 50 * (Float.pi / 180)
-        self.attitude_view.scene?.rootNode.eulerAngles = SCNVector3(d, d, 0)
+        let d = 50 * (Float.pi / 180) // rad = theta * (pi / 180)
+        self.attitude_view.scene?.rootNode.eulerAngles = SCNVector3(self.attitude_pitch!, self.attitude_yaw!, self.attitude_roll!)
+        print(d)
 
     }
     

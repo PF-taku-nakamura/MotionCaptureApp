@@ -22,11 +22,11 @@ class GameScene: SCNScene {
     func setUpScene() {
         
         // iPhone
-        let box:SCNGeometry = SCNBox(width: 1, height: 2, length: 3, chamferRadius: 0.4)
+        let box:SCNGeometry = SCNBox(width: 2, height: 1
+            
+            , length: 3, chamferRadius: 0.4)
         let geometryNode = SCNNode(geometry: box)
-        // iPhoneをオイラー角で回転
-        let d = 30.0 * Double(Float.pi / 180)
-        geometryNode.eulerAngles = SCNVector3(d, d, 0)
+        //geometryNode.rotation=SCNVector4(1, 0, 0, 0.25 * Float.pi)
         // iPhoneの描画
         self.rootNode.addChildNode(geometryNode)
         
