@@ -386,7 +386,25 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PiY-ma-8DT">
-                                <rect key="frame" x="10" y="340" width="300" height="21"/>
+                                <rect key="frame" x="10" y="340" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="80f-GK-KQg">
+                                <rect key="frame" x="10" y="460" width="300" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ViS-Nk-Ja4">
+                                <rect key="frame" x="10" y="517" width="300" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YB2-SR-3Fd">
+                                <rect key="frame" x="10" y="410" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -394,19 +412,31 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="oor-2Y-rCf" firstAttribute="top" secondItem="YB2-SR-3Fd" secondAttribute="bottom" constant="431" id="0vG-4U-vNs"/>
                             <constraint firstItem="mT8-b4-8KP" firstAttribute="top" secondItem="MaZ-j8-Vza" secondAttribute="bottom" constant="36" id="1Y8-J1-YcD"/>
                             <constraint firstItem="MaZ-j8-Vza" firstAttribute="leading" secondItem="d71-oj-vhP" secondAttribute="leading" constant="10" id="6fI-an-UCi"/>
                             <constraint firstItem="MaZ-j8-Vza" firstAttribute="top" secondItem="d71-oj-vhP" secondAttribute="top" constant="50" id="9JB-4O-iAv"/>
+                            <constraint firstItem="80f-GK-KQg" firstAttribute="leading" secondItem="YB2-SR-3Fd" secondAttribute="leading" id="AmP-y0-7ws"/>
                             <constraint firstItem="PiY-ma-8DT" firstAttribute="leading" secondItem="mT8-b4-8KP" secondAttribute="leading" id="Kwl-Br-L74"/>
                             <constraint firstAttribute="trailingMargin" secondItem="mT8-b4-8KP" secondAttribute="trailing" constant="84" id="RGJ-pH-3hU"/>
+                            <constraint firstItem="ViS-Nk-Ja4" firstAttribute="top" secondItem="80f-GK-KQg" secondAttribute="bottom" constant="36" id="TZb-Hr-gRW"/>
                             <constraint firstItem="mT8-b4-8KP" firstAttribute="leading" secondItem="MaZ-j8-Vza" secondAttribute="leading" id="XdD-vk-XKr"/>
-                            <constraint firstItem="PiY-ma-8DT" firstAttribute="trailing" secondItem="mT8-b4-8KP" secondAttribute="trailing" id="bmy-ss-Ra6"/>
+                            <constraint firstItem="80f-GK-KQg" firstAttribute="top" secondItem="YB2-SR-3Fd" secondAttribute="bottom" constant="29" id="ZJ8-mV-DQQ"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="PiY-ma-8DT" secondAttribute="trailing" constant="20" symbolic="YES" id="dOq-VD-aZS"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="YB2-SR-3Fd" secondAttribute="trailing" constant="20" symbolic="YES" id="hFb-2W-AhQ"/>
+                            <constraint firstItem="YB2-SR-3Fd" firstAttribute="leading" secondItem="PiY-ma-8DT" secondAttribute="leading" id="jWJ-eO-HL5"/>
+                            <constraint firstItem="ViS-Nk-Ja4" firstAttribute="trailing" secondItem="80f-GK-KQg" secondAttribute="trailing" id="ke2-Cr-129"/>
+                            <constraint firstItem="80f-GK-KQg" firstAttribute="trailing" secondItem="mT8-b4-8KP" secondAttribute="trailing" id="qM1-im-jhh"/>
                             <constraint firstItem="oor-2Y-rCf" firstAttribute="top" secondItem="PiY-ma-8DT" secondAttribute="bottom" constant="501" id="rHF-kh-r7j"/>
+                            <constraint firstItem="ViS-Nk-Ja4" firstAttribute="leading" secondItem="80f-GK-KQg" secondAttribute="leading" id="vhJ-Sn-gJ0"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="acceleration_EMA" destination="PiY-ma-8DT" id="33X-sz-NRo"/>
+                        <outlet property="acceleration_highpass" destination="PiY-ma-8DT" id="ciV-OA-lPh"/>
                         <outlet property="acceleration_raw" destination="mT8-b4-8KP" id="jEF-vy-VeX"/>
+                        <outlet property="attitude_raw" destination="ViS-Nk-Ja4" id="64I-G6-lsa"/>
+                        <outlet property="geomagnetism_raw" destination="YB2-SR-3Fd" id="fw8-vb-3yo"/>
+                        <outlet property="gyroscope_raw" destination="80f-GK-KQg" id="oNc-ak-T6m"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2dv-HN-SyL" userLabel="First Responder" sceneMemberID="firstResponder"/>
