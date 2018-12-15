@@ -412,6 +412,12 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9dR-Cd-P22">
+                                <rect key="frame" x="10" y="591" width="300" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -420,7 +426,10 @@
                             <constraint firstItem="172-1U-VDn" firstAttribute="leading" secondItem="d71-oj-vhP" secondAttribute="leading" id="5EM-Gy-SAF"/>
                             <constraint firstItem="MaZ-j8-Vza" firstAttribute="leading" secondItem="d71-oj-vhP" secondAttribute="leading" constant="10" id="6fI-an-UCi"/>
                             <constraint firstItem="MaZ-j8-Vza" firstAttribute="top" secondItem="d71-oj-vhP" secondAttribute="top" constant="50" id="9JB-4O-iAv"/>
+                            <constraint firstItem="9dR-Cd-P22" firstAttribute="leading" secondItem="ViS-Nk-Ja4" secondAttribute="leading" id="9Zs-1c-v0C"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="9dR-Cd-P22" secondAttribute="trailing" constant="20" symbolic="YES" id="9gz-ad-M7c"/>
                             <constraint firstItem="80f-GK-KQg" firstAttribute="leading" secondItem="YB2-SR-3Fd" secondAttribute="leading" id="AmP-y0-7ws"/>
+                            <constraint firstItem="9dR-Cd-P22" firstAttribute="top" secondItem="ViS-Nk-Ja4" secondAttribute="bottom" constant="53" id="HH4-WG-4zJ"/>
                             <constraint firstItem="PiY-ma-8DT" firstAttribute="leading" secondItem="mT8-b4-8KP" secondAttribute="leading" id="Kwl-Br-L74"/>
                             <constraint firstAttribute="trailingMargin" secondItem="mT8-b4-8KP" secondAttribute="trailing" constant="84" id="RGJ-pH-3hU"/>
                             <constraint firstItem="ViS-Nk-Ja4" firstAttribute="top" secondItem="80f-GK-KQg" secondAttribute="bottom" constant="36" id="TZb-Hr-gRW"/>
@@ -441,6 +450,7 @@
                     <connections>
                         <outlet property="acceleration_highpass" destination="PiY-ma-8DT" id="ciV-OA-lPh"/>
                         <outlet property="acceleration_raw" destination="mT8-b4-8KP" id="jEF-vy-VeX"/>
+                        <outlet property="altitude_raw" destination="9dR-Cd-P22" id="BMz-QL-Wst"/>
                         <outlet property="attitude_raw" destination="ViS-Nk-Ja4" id="64I-G6-lsa"/>
                         <outlet property="attitude_view" destination="172-1U-VDn" id="9YN-Ig-4Co"/>
                         <outlet property="geomagnetism_raw" destination="YB2-SR-3Fd" id="fw8-vb-3yo"/>

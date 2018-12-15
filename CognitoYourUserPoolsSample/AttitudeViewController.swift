@@ -25,6 +25,9 @@ class AttitudeViewController: UIViewController {
     // MotionManager
     let motionManager = CMMotionManager()
     
+    // Altimeter(高度の取得のため)
+    let altimeterManager = CMAltimeter()
+    
     // 表示
     @IBOutlet weak var acceleration_raw: UILabel! // 生加速度
     @IBOutlet weak var acceleration_highpass: UILabel! // EMA(ローパス)加速度
@@ -32,6 +35,7 @@ class AttitudeViewController: UIViewController {
     @IBOutlet weak var gyroscope_raw: UILabel! // 生ジャイロ
     @IBOutlet weak var attitude_raw: UILabel! // ヨーピッチロール
     @IBOutlet weak var attitude_view: SCNView! // ヨーピッチロールを表示するView
+    @IBOutlet weak var altitude_raw: UILabel! // 高度
     
     
     override func viewDidLoad() {
@@ -42,12 +46,14 @@ class AttitudeViewController: UIViewController {
         self.geomagnetism_raw.sizeToFit()
         self.gyroscope_raw.sizeToFit()
         self.attitude_raw.sizeToFit()
+        self.altitude_raw.sizeToFit()
         //表示可能最大行数を指定
         self.acceleration_raw.numberOfLines = 0
         self.acceleration_highpass.numberOfLines = 0
         self.geomagnetism_raw.numberOfLines = 0
         self.gyroscope_raw.numberOfLines = 0
         self.attitude_raw.numberOfLines = 0
+        self.altitude_raw.numberOfLines = 0
         
         if motionManager.isAccelerometerAvailable {
             // intervalの設定[sec]
@@ -75,6 +81,12 @@ class AttitudeViewController: UIViewController {
             motionManager.startDeviceMotionUpdates(
                 to: OperationQueue.current!,
                 withHandler: {(motionData:CMDeviceMotion?, errorOC: Error?) in self.outputAttitudeData(attitude: motionData!.attitude)
+            })
+            // 高度値の取得(iPhone6以上)
+            altimeterManager.startRelativeAltitudeUpdates(
+                to: OperationQueue.current!,
+                withHandler: {(altitudeData:CMAltitudeData?, errorOC: Error?) in
+                    self.outputAltitudeData(altitude: altitudeData!)
             })
         }
         
@@ -128,6 +140,10 @@ class AttitudeViewController: UIViewController {
         self.attitude_pitch=attitude.pitch
         self.attitude_roll=(-1.0)*attitude.roll
         //self.attitude_view.scene?.rootNode.eulerAngles = SCNVector3(attitude.roll, attitude.pitch, attitude.yaw)
+    }
+    
+    func outputAltitudeData(altitude: CMAltitudeData){
+        self.altitude_raw.text = "高度: \(altitude.relativeAltitude)"
     }
     
     // センサー取得を止める関数
