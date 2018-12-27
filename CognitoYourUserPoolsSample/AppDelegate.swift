@@ -18,6 +18,8 @@
 import UIKit
 import AWSCore
 import AWSCognitoIdentityProvider
+import AWSSNS
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -32,6 +34,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        // ユーザーからPush Nortification通知の許可をもらう.
+        if #available(iOS 10.0, *) {
+            // iOS 10 以降の設定
+            let notificationCenter = UNUserNotificationCenter.current()
+            
+            let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+            notificationCenter.requestAuthorization(
+                options: authOptions,
+                completionHandler: {granted, error in
+                    if error != nil {
+                        // エラー時の処理
+                        return
+                    }
+                    if granted {
+                        // デバイストークンの要求
+                        DispatchQueue.main.async(execute: {
+                            UIApplication.shared.registerForRemoteNotifications()
+                        })
+                    }
+            })
+            
+        } else {
+            // iOS 10 より前の設定
+            let settings: UIUserNotificationSettings =
+                UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+            application.registerUserNotificationSettings(settings)
+            UIApplication.shared.registerForRemoteNotifications()
+            
+        }
         
         // Warn user if configuration not updated
         if (CognitoIdentityUserPoolId == "ap-northeast-1_uOY42L9KD") {
@@ -66,6 +98,49 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
+    // プッシュ通知の許可をユーザーからもらったら、トークンをSNSへ送信するコード
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        //Tokenの文字成形
+        var token = String(format: "%@", deviceToken as CVarArg) as String
+        let characterSet: CharacterSet = CharacterSet.init(charactersIn: "<>")
+        token = token.trimmingCharacters(in: characterSet)
+        token = token.replacingOccurrences(of: " ", with: "")
+        print("deviceToken: \(token)")
+        
+        // Initialize the Amazon Cognito credentials provider
+        let credentialsProvider = AWSCognitoCredentialsProvider(regionType:.APNortheast1,
+                                                                identityPoolId:"ap-northeast-1:0b87cb12-8ca5-431b-9866-b964b04f65a2")
+        let configuration = AWSServiceConfiguration(region:.APNortheast1, credentialsProvider:credentialsProvider)
+        AWSServiceManager.default().defaultServiceConfiguration = configuration
+        
+        let sns = AWSSNS.default()
+        let request = AWSSNSCreatePlatformEndpointInput()
+        request?.token = token
+        request?.platformApplicationArn = "arn:aws:sns:ap-northeast-1:792705657504:app/APNS_SANDBOX/MotionCaptureAppPushNortification"
+        request?.customUserData = "Memo"
+        
+        sns.createPlatformEndpoint(request!).continueWith(executor: AWSExecutor.mainThread(), block: { (task: AWSTask!) -> AnyObject? in
+            if task.error != nil {
+                print("Error: \(String(describing: task.error))")
+            } else {
+                let result = task.result!
+                let subscribeInput = AWSSNSSubscribeInput()
+                subscribeInput?.topicArn = "arn:aws:sns:ap-northeast-1:792705657504:app/APNS_SANDBOX/MotionCaptureAppPushNortification"
+                subscribeInput?.endpoint = result.endpointArn
+                subscribeInput?.protocols = "Application"
+                sns.subscribe(subscribeInput!)
+                
+                //self.saveEndpointArn(result.endpointArn)
+            }
+            return nil
+        })
+    }
+    
+    private func application(application: UIApplication!, didFailToRegisterForRemoteNotificationsWithError error: NSError!) {
+        // プッシュ通知が利用不可であればerrorが返ってくる
+        NSLog("error: " + "\(String(describing: error))")
+    }
+    
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
@@ -88,6 +163,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:
     }
     
+}
+
+// MARK:- AWSSNSDelegate protocol delegate
+// プッシュ通知受信時のコードを追加
+@available(iOS 10, *)
+extension AppDelegate : UNUserNotificationCenterDelegate {
+    
+    // iOS 10 以降では通知を受け取るとこちらのデリゲートメソッドが呼ばれる。
+    //foreground
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        print("notification is \(notification)")
+        //write your action here
+        completionHandler(UNNotificationPresentationOptions.alert)
+    }
+    
+    //background
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                didReceive response: UNNotificationResponse,
+                                withCompletionHandler completionHandler: @escaping () -> Void) {
+        print("response is \(response)")
+        //write your action here
+        completionHandler()
+    }
 }
 
 // MARK:- AWSCognitoIdentityInteractiveAuthenticationDelegate protocol delegate
@@ -186,4 +286,3 @@ extension AppDelegate: AWSCognitoIdentityRememberDevice {
         }
     }
 }
-

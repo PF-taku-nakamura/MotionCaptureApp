@@ -29,6 +29,7 @@
 		B095555321BEA1B700883912 /* AttitudeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B095555221BEA1B700883912 /* AttitudeViewController.swift */; };
 		B095555521BED49900883912 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = B095555421BED49800883912 /* back.png */; };
 		B095555721C2428800883912 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B095555621C2428800883912 /* GameScene.swift */; };
+		B0D65CF721D4A58C00250432 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0D65CF621D4A58C00250432 /* ExternalAccessory.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +58,8 @@
 		B095555221BEA1B700883912 /* AttitudeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttitudeViewController.swift; sourceTree = "<group>"; };
 		B095555421BED49800883912 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
 		B095555621C2428800883912 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		B0D65CF521D4349C00250432 /* CognitoYourUserPoolsSample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CognitoYourUserPoolsSample.entitlements; sourceTree = "<group>"; };
+		B0D65CF621D4A58C00250432 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
 		DBEB9BB4F88788184F7DD583 /* Pods-CognitoYourUserPoolsSample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CognitoYourUserPoolsSample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CognitoYourUserPoolsSample/Pods-CognitoYourUserPoolsSample.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -65,6 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0D65CF721D4A58C00250432 /* ExternalAccessory.framework in Frameworks */,
 				0D5A8E5387CC8FA610CFB75B /* Pods_CognitoYourUserPoolsSample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -93,6 +97,7 @@
 		17FC2F7E1E258FC500174015 /* CognitoYourUserPoolsSample */ = {
 			isa = PBXGroup;
 			children = (
+				B0D65CF521D4349C00250432 /* CognitoYourUserPoolsSample.entitlements */,
 				17FC2F941E2590D800174015 /* MFAViewController.xib */,
 				17FC2F7F1E258FC500174015 /* AppDelegate.swift */,
 				17FC2F831E258FC500174015 /* Main.storyboard */,
@@ -130,6 +135,7 @@
 		2B50A37AC16AACF9427C4F0F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B0D65CF621D4A58C00250432 /* ExternalAccessory.framework */,
 				AB8F26771F0FF8105FC402DD /* Pods_CognitoYourUserPoolsSample.framework */,
 			);
 			name = Frameworks;
@@ -180,6 +186,11 @@
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = Q8NQ3N3YDF;
 						LastSwiftMigration = 1010;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -252,6 +263,7 @@
 				"${BUILT_PRODUCTS_DIR}/AWSCore/AWSCore.framework",
 				"${BUILT_PRODUCTS_DIR}/AWSMobileClient/AWSMobileClient.framework",
 				"${BUILT_PRODUCTS_DIR}/AWSS3/AWSS3.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSSNS/AWSSNS.framework",
 				"${BUILT_PRODUCTS_DIR}/SSZipArchive/SSZipArchive.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -263,6 +275,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSMobileClient.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSS3.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSSNS.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SSZipArchive.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -426,6 +439,7 @@
 			baseConfigurationReference = DBEB9BB4F88788184F7DD583 /* Pods-CognitoYourUserPoolsSample.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = CognitoYourUserPoolsSample/CognitoYourUserPoolsSample.entitlements;
 				DEVELOPMENT_TEAM = Q8NQ3N3YDF;
 				INFOPLIST_FILE = CognitoYourUserPoolsSample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -441,6 +455,7 @@
 			baseConfigurationReference = 2D8C9B52DE415302BA7B152A /* Pods-CognitoYourUserPoolsSample.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = CognitoYourUserPoolsSample/CognitoYourUserPoolsSample.entitlements;
 				DEVELOPMENT_TEAM = Q8NQ3N3YDF;
 				INFOPLIST_FILE = CognitoYourUserPoolsSample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
