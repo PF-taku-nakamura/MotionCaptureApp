@@ -40,6 +40,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // iOS 10 以降の設定
             let notificationCenter = UNUserNotificationCenter.current()
             
+            notificationCenter.delegate = self
+            
             let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
             notificationCenter.requestAuthorization(
                 options: authOptions,
@@ -167,11 +169,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 // MARK:- AWSSNSDelegate protocol delegate
 // プッシュ通知受信時のコードを追加
-@available(iOS 10, *)
 extension AppDelegate : UNUserNotificationCenterDelegate {
-    
+
     // iOS 10 以降では通知を受け取るとこちらのデリゲートメソッドが呼ばれる。
     //foreground
+    @available(iOS 10.0, *)
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
@@ -181,6 +183,7 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
     }
     
     //background
+    @available(iOS 10.0, *)
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
