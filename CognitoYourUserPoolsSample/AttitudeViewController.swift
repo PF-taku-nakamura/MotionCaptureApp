@@ -9,6 +9,7 @@
 import UIKit
 import CoreMotion
 import SceneKit
+import AWSDynamoDB
 
 class AttitudeViewController: UIViewController {
     
@@ -36,6 +37,10 @@ class AttitudeViewController: UIViewController {
     @IBOutlet weak var attitude_raw: UILabel! // ヨーピッチロール
     @IBOutlet weak var attitude_view: SCNView! // ヨーピッチロールを表示するView
     @IBOutlet weak var altitude_raw: UILabel! // 高度
+    @IBOutlet weak var timestamp_value: UILabel! // タイムスタンプ
+    
+    
+    var isUploaded: Bool = false
     
     
     override func viewDidLoad() {
@@ -47,6 +52,7 @@ class AttitudeViewController: UIViewController {
         self.gyroscope_raw.sizeToFit()
         self.attitude_raw.sizeToFit()
         self.altitude_raw.sizeToFit()
+        self.timestamp_value.sizeToFit()
         //表示可能最大行数を指定
         self.acceleration_raw.numberOfLines = 0
         self.acceleration_highpass.numberOfLines = 0
@@ -54,6 +60,7 @@ class AttitudeViewController: UIViewController {
         self.gyroscope_raw.numberOfLines = 0
         self.attitude_raw.numberOfLines = 0
         self.altitude_raw.numberOfLines = 0
+        self.timestamp_value.numberOfLines = 0
         
         if motionManager.isAccelerometerAvailable {
             // intervalの設定[sec]
@@ -135,12 +142,39 @@ class AttitudeViewController: UIViewController {
     }
     
     func outputAttitudeData(attitude: CMAttitude){
+        // 時刻
+        // 現在時刻の表示
+        let t = Double(time(nil))
+        self.timestamp_value.text = "Timestamp: \(String(format: "%06f", t)))"
         // ヨーピッチロール
         self.attitude_raw.text = "Yaw: \(String(format: "%06f", attitude.yaw))\nPitch: \(String(format: "%06f", attitude.pitch))\nRoll: \(String(format: "%06f", attitude.roll))"
         self.attitude_yaw=attitude.yaw
         self.attitude_pitch=attitude.pitch
         self.attitude_roll=(-1.0)*attitude.roll
         //self.attitude_view.scene?.rootNode.eulerAngles = SCNVector3(attitude.roll, attitude.pitch, attitude.yaw)
+        
+        
+        let awsAttitude = Attitude()
+        awsAttitude?.TimeStamp = t as NSNumber
+        awsAttitude?.Yaw = attitude.yaw as NSNumber
+        awsAttitude?.Pitch = attitude.pitch as NSNumber
+        awsAttitude?.Roll = attitude.roll as NSNumber
+        
+        let dynamoDBObjectMapper = AWSDynamoDBObjectMapper.default()
+        if !self.isUploaded {
+            if let at = awsAttitude {
+                dynamoDBObjectMapper.save(at).continueWith(block: { (task:AWSTask<AnyObject>!) -> Any? in
+                    if let error = task.error as NSError? {
+                        print("The request failed. Error: \(error)")
+                    } else {
+                        print(task.result)
+                    }
+                    self.isUploaded = true
+                    return nil
+                })
+            }
+        }
+        
     }
     
     func outputAltitudeData(altitude: CMAltitudeData){
