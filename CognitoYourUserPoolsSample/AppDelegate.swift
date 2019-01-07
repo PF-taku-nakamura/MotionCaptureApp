@@ -36,6 +36,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+        // アプリが勝手にスリープモードになるのを防ぐ
+        UIApplication.shared.isIdleTimerDisabled = true
+        
         // ユーザーからPush Nortification通知の許可をもらう.
         if #available(iOS 10.0, *) {
             // iOS 10 以降の設定
