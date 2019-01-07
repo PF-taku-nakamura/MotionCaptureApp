@@ -284,7 +284,7 @@
         <!--Motion Capture View Controller-->
         <scene sceneID="pps-kx-nSy">
             <objects>
-                <viewController id="cj3-qa-G2h" customClass="MotionCaptureViewController" customModule="CognitoYourUserPoolsSample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="video" id="cj3-qa-G2h" customClass="MotionCaptureViewController" customModule="CognitoYourUserPoolsSample" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="brq-IK-hcP"/>
                         <viewControllerLayoutGuide type="bottom" id="dcM-ma-Yl9"/>
@@ -363,7 +363,7 @@
         <!--Attitude View Controller-->
         <scene sceneID="L0z-R5-uc4">
             <objects>
-                <viewController id="Evn-jR-oAA" customClass="AttitudeViewController" customModule="CognitoYourUserPoolsSample" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="attitude" id="Evn-jR-oAA" customClass="AttitudeViewController" customModule="CognitoYourUserPoolsSample" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="PqQ-Dm-8uK"/>
                         <viewControllerLayoutGuide type="bottom" id="oor-2Y-rCf"/>

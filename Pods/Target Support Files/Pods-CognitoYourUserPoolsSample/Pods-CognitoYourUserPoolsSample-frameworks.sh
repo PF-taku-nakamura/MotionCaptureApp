@@ -150,6 +150,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/AWSCore/AWSCore.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/AWSMobileClient/AWSMobileClient.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/AWSS3/AWSS3.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/AWSSNS/AWSSNS.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SSZipArchive/SSZipArchive.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
@@ -160,6 +161,7 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/AWSCore/AWSCore.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/AWSMobileClient/AWSMobileClient.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/AWSS3/AWSS3.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/AWSSNS/AWSSNS.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SSZipArchive/SSZipArchive.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then

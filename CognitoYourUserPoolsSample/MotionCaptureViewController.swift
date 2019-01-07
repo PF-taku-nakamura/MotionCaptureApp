@@ -21,7 +21,6 @@ class MotionCaptureViewController: UIViewController {
     @IBOutlet weak var changeFpsButton: UISegmentedControl!
     
     // 動画情報の表示
-    
     var isRecoding = false
     var fileOutput: AVCaptureMovieFileOutput?
     var isBackCamera: Bool = true
@@ -39,6 +38,9 @@ class MotionCaptureViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        // AppDelegateから録画関数を呼び出すため
+        let appDelegate:AppDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.motionCaptureViewController = self
         // Cognitoの認証データを取得
         AWSMobileClient.sharedInstance().initialize { (userState, error) in
             if let userState = userState {
@@ -123,12 +125,13 @@ class MotionCaptureViewController: UIViewController {
 
     @IBAction func tapStartStopButton(_ sender: Any) {
         if self.isRecoding { // 録画終了
+            print("録画終了！")
             self.fileOutput?.stopRecording()
             // アップロード
             uploadVideo()
         }
         else{ // 録画開始
-
+            print("録画開始！")
             let fileName = "\(Date().timeIntervalSince1970).mov"
             self.filePath = NSHomeDirectory() + "/tmp/" + fileName
             self.motionCaptureVideoFileURL = NSURL(fileURLWithPath: self.filePath!) as URL

@@ -30,6 +30,11 @@
 	<string>姿勢を取るのにセンサを使わせてください</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>撮影した動画を保存させてください</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
