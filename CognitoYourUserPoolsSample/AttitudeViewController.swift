@@ -60,6 +60,7 @@ class AttitudeViewController: UIViewController {
             motionManager.accelerometerUpdateInterval = 0.1
             motionManager.magnetometerUpdateInterval = 0.1
             motionManager.gyroUpdateInterval = 0.1
+            motionManager.deviceMotionUpdateInterval = 0.01
             
             // 加速度センサー値の取得開始
             motionManager.startAccelerometerUpdates(
