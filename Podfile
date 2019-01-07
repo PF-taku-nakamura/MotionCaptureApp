@@ -11,4 +11,5 @@ target 'CognitoYourUserPoolsSample' do
     pod 'AWSCognito'
     pod 'AWSS3'
     pod 'AWSSNS'
+    pod 'AWSDynamoDB'
 end

@@ -8,6 +8,8 @@ PODS:
     - AWSCore (= 2.7.2)
   - AWSCognitoIdentityProviderASF (1.0.1)
   - AWSCore (2.7.2)
+  - AWSDynamoDB (2.7.2):
+    - AWSCore (= 2.7.2)
   - AWSMobileClient (2.7.2):
     - AWSAuthCore (= 2.7.2)
     - AWSCognitoIdentityProvider (= 2.7.2)
@@ -21,6 +23,7 @@ DEPENDENCIES:
   - AWSCognito
   - AWSCognitoIdentityProvider (~> 2.7.0)
   - AWSCore (~> 2.7.0)
+  - AWSDynamoDB
   - AWSMobileClient (~> 2.7.0)
   - AWSS3
   - AWSSNS
@@ -33,6 +36,7 @@ SPEC REPOS:
     - AWSCognitoIdentityProvider
     - AWSCognitoIdentityProviderASF
     - AWSCore
+    - AWSDynamoDB
     - AWSMobileClient
     - AWSS3
     - AWSSNS
@@ -44,11 +48,12 @@ SPEC CHECKSUMS:
   AWSCognitoIdentityProvider: 84c23c4eba03886a82b1c52865ff25480c75fed0
   AWSCognitoIdentityProviderASF: f94f1a502e72ef3d0a1de93e10bf7a79c8698118
   AWSCore: 5734e075ffb7470019f85035623adbe0332d7efd
+  AWSDynamoDB: cb05ab5cb512558db0442ba2d552d0f948dde882
   AWSMobileClient: 96730ff12f2ab15d19325e6a8068bb4dec0d0265
   AWSS3: eb4f5fbd5b5bb675294f8add5be554436ec6857d
   AWSSNS: 1087af3e3aa202f247180a71529bebfcc5575f78
   SSZipArchive: 41455d4b8d2b6ab93990820b50dc697c2554a322
 
-PODFILE CHECKSUM: 18ec10f98a2a8c9bb05d26a2509f53c3be7a797d
+PODFILE CHECKSUM: eba5280f81478d37dc18185ba7afd9064876d8bb
 
 COCOAPODS: 1.5.3
