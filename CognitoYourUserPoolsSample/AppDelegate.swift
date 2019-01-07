@@ -30,6 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var navigationController: UINavigationController?
     var storyboard: UIStoryboard?
     var rememberDeviceCompletionSource: AWSTaskCompletionSource<NSNumber>?
+    var motionCaptureViewController: MotionCaptureViewController!
     
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -144,25 +145,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationWillResignActive(_ application: UIApplication) {
-        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-        // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+        print("アプリ閉じそうな時に呼ばれる")
     }
     
     func applicationDidEnterBackground(_ application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        print("アプリを閉じた時に呼ばれる")
     }
     
     func applicationWillEnterForeground(_ application: UIApplication) {
-        // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+        print("アプリを開きそうな時に呼ばれる")
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        print("アプリを開いた時に呼ばれる")
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
-        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:
+        print("フリックしてアプリを終了させた時に呼ばれる")
     }
     
 }
@@ -177,8 +176,25 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        print("notification is \(notification)")
+        print("notification is \(notification.copy)")
+        // Push通知の内容
+        print("content is")
+        print("\(notification.request.content.body)")
+        // AppDelegateからMotionCaptureViewControllerの録画関数を呼び出すため
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.motionCaptureViewController.tapStartStopButton((Any).self)
+        //Push通知で特定のViewを開く
+        //let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        //let attitudeViewController = storyboard.instantiateViewController(withIdentifier: "video")
+        // 録画ボタンをクリックする
+        //delegate
+        
         //write your action here
+        
+        //let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        //let secondViewController: MotionCaptureViewController = storyboard.instantiateInitialViewController() as! MotionCaptureViewController
+        //self.navigationController?.pushViewController(secondViewController, animated: true)
+        //
         completionHandler(UNNotificationPresentationOptions.alert)
     }
     
