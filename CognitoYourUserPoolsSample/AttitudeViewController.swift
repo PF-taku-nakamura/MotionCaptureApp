@@ -22,6 +22,7 @@ class AttitudeViewController: UIViewController {
     var attitude_yaw: Double? = 0.0
     var attitude_pitch: Double? = 0.0
     var attitude_roll: Double? = 0.0
+    var attitude_timestamp: Double? = 0.0
     
     // MotionManager
     let motionManager = CMMotionManager()
@@ -151,29 +152,28 @@ class AttitudeViewController: UIViewController {
         self.attitude_yaw=attitude.yaw
         self.attitude_pitch=attitude.pitch
         self.attitude_roll=(-1.0)*attitude.roll
-        //self.attitude_view.scene?.rootNode.eulerAngles = SCNVector3(attitude.roll, attitude.pitch, attitude.yaw)
-        
-        // DynamoDBにヨーピッチロールとタイムスタンプデータをアップロードする
-        let awsAttitude = Attitude()
-        awsAttitude?.TimeStamp = t as NSNumber
-        awsAttitude?.Yaw = attitude.yaw as NSNumber
-        awsAttitude?.Pitch = attitude.pitch as NSNumber
-        awsAttitude?.Roll = attitude.roll as NSNumber
-        
-        let dynamoDBObjectMapper = AWSDynamoDBObjectMapper.default()
-        if !self.isUploaded {
-            if let at = awsAttitude {
-                dynamoDBObjectMapper.save(at).continueWith(block: { (task:AWSTask<AnyObject>!) -> Any? in
-                    if let error = task.error as NSError? {
-                        print("The request failed. Error: \(error)")
-                    } else {
-                        print(task.result)
-                    }
-                    self.isUploaded = true
-                    return nil
-                })
-            }
-        }
+        self.attitude_timestamp=t
+        // DynamoDBにヨーピッチロールとタイムスタンプデータをアップロードする(このViewに来たらずっと上げ続ける)
+//        let awsAttitude = Attitude()
+//        awsAttitude?.TimeStamp = t as NSNumber
+//        awsAttitude?.Yaw = attitude.yaw as NSNumber
+//        awsAttitude?.Pitch = attitude.pitch as NSNumber
+//        awsAttitude?.Roll = attitude.roll as NSNumber
+//
+//        let dynamoDBObjectMapper = AWSDynamoDBObjectMapper.default()
+//        if !self.isUploaded {
+//            if let at = awsAttitude {
+//                dynamoDBObjectMapper.save(at).continueWith(block: { (task:AWSTask<AnyObject>!) -> Any? in
+//                    if let error = task.error as NSError? {
+//                        print("The request failed. Error: \(error)")
+//                    } else {
+//                        print(task.result)
+//                    }
+//                    self.isUploaded = true
+//                    return nil
+//                })
+//            }
+//        }
         
     }
     
@@ -194,7 +194,24 @@ class AttitudeViewController: UIViewController {
         let d = 50 * (Float.pi / 180) // rad = theta * (pi / 180)
         self.attitude_view.scene?.rootNode.eulerAngles = SCNVector3(self.attitude_pitch!, self.attitude_yaw!, self.attitude_roll!)
         print(d)
-
+        // DynamoDBにヨーピッチロールとタイムスタンプデータをアップロードする(タップされたらその時のヨーピッチロールをDynamoDBに上げる)
+        let awsAttitude = Attitude()
+        awsAttitude?.TimeStamp = self.attitude_timestamp! as NSNumber
+        awsAttitude?.Yaw = self.attitude_yaw! as NSNumber
+        awsAttitude?.Pitch = self.attitude_pitch! as NSNumber
+        awsAttitude?.Roll = self.attitude_roll! as NSNumber
+        
+        let dynamoDBObjectMapper = AWSDynamoDBObjectMapper.default()
+        if let at = awsAttitude {
+            dynamoDBObjectMapper.save(at).continueWith(block: { (task:AWSTask<AnyObject>!) -> Any? in
+                if let error = task.error as NSError? {
+                    print("The request failed. Error: \(error)")
+                } else {
+                    print(task.result!)
+                }
+                return nil
+            })
+        }
     }
     
     override func didReceiveMemoryWarning() {
