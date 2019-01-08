@@ -183,21 +183,10 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
         // Push通知の内容
         print("content is")
         print("\(notification.request.content.body)")
-        // AppDelegateからMotionCaptureViewControllerの録画関数を呼び出すため
+        // AppDelegateからMotionCaptureViewControllerの録画関数を呼び出す
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.motionCaptureViewController.tapStartStopButton((Any).self)
-        //Push通知で特定のViewを開く
-        //let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        //let attitudeViewController = storyboard.instantiateViewController(withIdentifier: "video")
-        // 録画ボタンをクリックする
-        //delegate
         
-        //write your action here
-        
-        //let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        //let secondViewController: MotionCaptureViewController = storyboard.instantiateInitialViewController() as! MotionCaptureViewController
-        //self.navigationController?.pushViewController(secondViewController, animated: true)
-        //
         completionHandler(UNNotificationPresentationOptions.alert)
     }
     
