@@ -144,8 +144,8 @@ class AttitudeViewController: UIViewController {
     func outputAttitudeData(attitude: CMAttitude){
         // 時刻
         // 現在時刻の表示
-        let t = Double(time(nil))
-        self.timestamp_value.text = "Timestamp: \(String(format: "%06f", t)))"
+        let t = Double(Date().timeIntervalSince1970)
+        self.timestamp_value.text = "Timestamp: \(String(format: "%06f", t))"
         // ヨーピッチロール
         self.attitude_raw.text = "Yaw: \(String(format: "%06f", attitude.yaw))\nPitch: \(String(format: "%06f", attitude.pitch))\nRoll: \(String(format: "%06f", attitude.roll))"
         self.attitude_yaw=attitude.yaw
@@ -153,7 +153,7 @@ class AttitudeViewController: UIViewController {
         self.attitude_roll=(-1.0)*attitude.roll
         //self.attitude_view.scene?.rootNode.eulerAngles = SCNVector3(attitude.roll, attitude.pitch, attitude.yaw)
         
-        
+        // DynamoDBにヨーピッチロールとタイムスタンプデータをアップロードする
         let awsAttitude = Attitude()
         awsAttitude?.TimeStamp = t as NSNumber
         awsAttitude?.Yaw = attitude.yaw as NSNumber
