@@ -97,6 +97,8 @@ class MotionCaptureViewController: UIViewController {
     @objc func done() {
         idField.endEditing(true)
         idField.text = "\(list[pickerView.selectedRow(inComponent: 0)])"
+        let appDelegate:AppDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.deviceId = idField.text!
     }
 
     // カメラの準備をする関数

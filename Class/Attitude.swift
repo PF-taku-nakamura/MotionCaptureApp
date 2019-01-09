@@ -15,6 +15,7 @@ class Attitude: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
     var Yaw: NSNumber?
     var Pitch: NSNumber?
     var Roll: NSNumber?
+    var DeviceId: NSString?
     
     static func dynamoDBTableName() -> String {
         return "Test"

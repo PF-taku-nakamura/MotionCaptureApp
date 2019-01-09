@@ -200,6 +200,10 @@ class AttitudeViewController: UIViewController {
         awsAttitude?.Yaw = self.attitude_yaw! as NSNumber
         awsAttitude?.Pitch = self.attitude_pitch! as NSNumber
         awsAttitude?.Roll = self.attitude_roll! as NSNumber
+        let appDelegate:AppDelegate = UIApplication.shared.delegate as! AppDelegate
+        if let deviceId = appDelegate.deviceId {
+            awsAttitude?.DeviceId = deviceId as NSString
+        }
         
         let dynamoDBObjectMapper = AWSDynamoDBObjectMapper.default()
         if let at = awsAttitude {
