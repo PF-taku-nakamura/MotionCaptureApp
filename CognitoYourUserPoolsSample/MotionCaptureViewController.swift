@@ -19,6 +19,11 @@ class MotionCaptureViewController: UIViewController {
     @IBOutlet weak var startStopButton: UIButton!
     @IBOutlet weak var showFpsLabel: UILabel!
     @IBOutlet weak var changeFpsButton: UISegmentedControl!
+    @IBOutlet weak var idField: UITextField!
+    
+    // 機体idを指定するためのドラムロール
+    var pickerView: UIPickerView = UIPickerView()
+    let list: [String] = ["1", "2", "3", "4"]
     
     // 動画情報の表示
     var isRecoding = false
@@ -38,6 +43,23 @@ class MotionCaptureViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        // 機体idを設定するためのドラムロール
+        // ピッカー設定
+        pickerView.delegate = self as? UIPickerViewDelegate
+        pickerView.dataSource = self as? UIPickerViewDataSource
+        pickerView.showsSelectionIndicator = true
+        // 決定バーの生成
+        let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 35))
+        let spacelItem = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+        let doneItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
+        toolbar.setItems([spacelItem, doneItem], animated: true)
+        // インプットビュー設定
+        idField.inputView = pickerView
+        idField.inputAccessoryView = toolbar
+        // 機体idのデフォルト値を設定
+        idField.textAlignment = NSTextAlignment.center
+        idField.text = "id未選択"
+        
         // AppDelegateから録画関数を呼び出すため
         let appDelegate:AppDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.motionCaptureViewController = self
@@ -70,7 +92,14 @@ class MotionCaptureViewController: UIViewController {
         // カメラの起動
         setupCamera(isBack: self.isBackCamera)
     }
+    
+    // 機体idを決定するボタンの押下
+    @objc func done() {
+        idField.endEditing(true)
+        idField.text = "\(list[pickerView.selectedRow(inComponent: 0)])"
+    }
 
+    // カメラの準備をする関数
     func setupCamera(isBack: Bool) {
         self.isRecoding = false
         self.captureSession = AVCaptureSession()
@@ -159,6 +188,47 @@ class MotionCaptureViewController: UIViewController {
     
 }
 
+extension MotionCaptureViewController : UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    // ドラムロールの列数
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    // ドラムロールの行数
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        /*
+         列が複数ある場合は
+         if component == 0 {
+         } else {
+         ...
+         }
+         こんな感じで分岐が可能
+         */
+        return list.count
+    }
+    
+    // ドラムロールの各タイトル
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        /*
+         列が複数ある場合は
+         if component == 0 {
+         } else {
+         ...
+         }
+         こんな感じで分岐が可能
+         */
+        return list[row]
+    }
+    
+    /*
+     // ドラムロール選択時
+     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+     self.textField.text = list[row]
+     }
+     */
+}
+
 extension MotionCaptureViewController: AVCaptureFileOutputRecordingDelegate {
     
     func uploadVideo(){
@@ -190,7 +260,7 @@ extension MotionCaptureViewController: AVCaptureFileOutputRecordingDelegate {
         let transferUtility = AWSS3TransferUtility.default()
         transferUtility.uploadFile(url,
                                    bucket: "poc-motioncapture-app",
-                                   key: "input/\(self.motionCaptureVideoFileURL!.lastPathComponent)",
+                                   key: "input/\(String(describing: self.idField.text!))/\(self.motionCaptureVideoFileURL!.lastPathComponent)",
                                    contentType: "video/quicktime",
                                    expression: expression,
                                    completionHandler: completionHandler).continueWith {

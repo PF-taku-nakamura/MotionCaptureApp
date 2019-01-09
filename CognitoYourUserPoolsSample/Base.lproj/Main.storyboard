@@ -297,13 +297,6 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Vd-ui-YJK">
-                                <rect key="frame" x="10" y="60" width="300" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="BIb-kH-TyW">
                                 <rect key="frame" x="81.5" y="825" width="251" height="29"/>
                                 <segments>
@@ -316,6 +309,20 @@
                                     <action selector="selectChangeFpsButton:" destination="cj3-qa-G2h" eventType="valueChanged" id="zGw-P1-XFx"/>
                                 </connections>
                             </segmentedControl>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Vd-ui-YJK">
+                                <rect key="frame" x="10" y="60" width="300" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vtz-l3-umY">
+                                <rect key="frame" x="10" y="725" width="97" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                             <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hyj-5C-47c">
                                 <rect key="frame" x="143" y="684" width="128" height="128"/>
                                 <state key="normal" image="takeButton.png"/>
@@ -351,6 +358,7 @@
                     </view>
                     <connections>
                         <outlet property="changeFpsButton" destination="BIb-kH-TyW" id="l62-yy-wG9"/>
+                        <outlet property="idField" destination="vtz-l3-umY" id="4Zv-zR-J2y"/>
                         <outlet property="showFpsLabel" destination="0Vd-ui-YJK" id="A3T-ii-c8Y"/>
                         <outlet property="startStopButton" destination="Hyj-5C-47c" id="2bY-eG-tOj"/>
                         <outlet property="videoView" destination="61s-JO-2c2" id="zl1-mu-sF2"/>
@@ -850,6 +858,7 @@
         <image name="takeButton.png" width="128" height="128"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="Nps-ui-6yD"/>
         <segue reference="3WV-mk-bcO"/>
     </inferredMetricsTieBreakers>
 </document>
