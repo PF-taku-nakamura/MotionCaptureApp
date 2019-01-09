@@ -30,6 +30,7 @@
 		B095555521BED49900883912 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = B095555421BED49800883912 /* back.png */; };
 		B095555721C2428800883912 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B095555621C2428800883912 /* GameScene.swift */; };
 		B0D65CF721D4A58C00250432 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0D65CF621D4A58C00250432 /* ExternalAccessory.framework */; };
+		B0D65CFA21E377E900250432 /* Attitude.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0D65CF921E377E900250432 /* Attitude.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +61,7 @@
 		B095555621C2428800883912 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		B0D65CF521D4349C00250432 /* CognitoYourUserPoolsSample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CognitoYourUserPoolsSample.entitlements; sourceTree = "<group>"; };
 		B0D65CF621D4A58C00250432 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
+		B0D65CF921E377E900250432 /* Attitude.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Attitude.swift; sourceTree = "<group>"; };
 		DBEB9BB4F88788184F7DD583 /* Pods-CognitoYourUserPoolsSample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CognitoYourUserPoolsSample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CognitoYourUserPoolsSample/Pods-CognitoYourUserPoolsSample.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -79,6 +81,7 @@
 		17FC2F731E258FC500174015 = {
 			isa = PBXGroup;
 			children = (
+				B0D65CF821E377C200250432 /* Class */,
 				17FC2F7E1E258FC500174015 /* CognitoYourUserPoolsSample */,
 				17FC2F7D1E258FC500174015 /* Products */,
 				DB539DB17300E4375A37CCA6 /* Pods */,
@@ -139,6 +142,14 @@
 				AB8F26771F0FF8105FC402DD /* Pods_CognitoYourUserPoolsSample.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B0D65CF821E377C200250432 /* Class */ = {
+			isa = PBXGroup;
+			children = (
+				B0D65CF921E377E900250432 /* Attitude.swift */,
+			);
+			path = Class;
 			sourceTree = "<group>";
 		};
 		DB539DB17300E4375A37CCA6 /* Pods */ = {
@@ -261,6 +272,7 @@
 				"${BUILT_PRODUCTS_DIR}/AWSCognitoIdentityProvider/AWSCognitoIdentityProvider.framework",
 				"${BUILT_PRODUCTS_DIR}/AWSCognitoIdentityProviderASF/AWSCognitoIdentityProviderASF.framework",
 				"${BUILT_PRODUCTS_DIR}/AWSCore/AWSCore.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSDynamoDB/AWSDynamoDB.framework",
 				"${BUILT_PRODUCTS_DIR}/AWSMobileClient/AWSMobileClient.framework",
 				"${BUILT_PRODUCTS_DIR}/AWSS3/AWSS3.framework",
 				"${BUILT_PRODUCTS_DIR}/AWSSNS/AWSSNS.framework",
@@ -273,6 +285,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCognitoIdentityProvider.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCognitoIdentityProviderASF.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSDynamoDB.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSMobileClient.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSS3.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSSNS.framework",
@@ -295,6 +308,7 @@
 				17FC2F9D1E259E5D00174015 /* SignUpViewController.swift in Sources */,
 				17FC2F9F1E259F3200174015 /* ConfirmSignUpViewController.swift in Sources */,
 				17FC2F9B1E259E0500174015 /* Constants.swift in Sources */,
+				B0D65CFA21E377E900250432 /* Attitude.swift in Sources */,
 				17FC2F991E25940900174015 /* SignInViewController.swift in Sources */,
 				B095555321BEA1B700883912 /* AttitudeViewController.swift in Sources */,
 				17FC2F971E25928900174015 /* MFAViewController.swift in Sources */,
