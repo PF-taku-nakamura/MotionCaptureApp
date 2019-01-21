@@ -16,9 +16,26 @@ class Attitude: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
     var Pitch: NSNumber?
     var Roll: NSNumber?
     var DeviceId: NSString?
+    // 姿勢データを送り続ける場合、以下も追加 ////////////////////
+    var BoatNumber: NSNumber = 1
+    var PositionLatitude: NSNumber = 0
+    var PositionLongitude: NSNumber = 0
+    var AccelarateX: NSNumber?
+    var AccelarateY: NSNumber?
+    var AccelarateZ: NSNumber?
+    var AngularX: NSNumber?
+    var AngularY: NSNumber?
+    var AngularZ: NSNumber?
+    var DirectionX: NSNumber?
+    var DirectionY: NSNumber?
+    var DirectionZ: NSNumber?
+    //////////////////////////////////////////////////
     
     static func dynamoDBTableName() -> String {
-        return "Test"
+        // 姿勢データをタップした時に送り続ける場合
+        //return "Test"
+        // 姿勢データを送り続ける場合
+        return "Infinity"
     }
     
     class func hashKeyAttribute() -> String {

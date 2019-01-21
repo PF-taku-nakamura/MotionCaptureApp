@@ -22,7 +22,21 @@ class AttitudeViewController: UIViewController {
     var attitude_yaw: Double? = 0.0
     var attitude_pitch: Double? = 0.0
     var attitude_roll: Double? = 0.0
+    // タイムスタンプの値を一時的に保存
     var attitude_timestamp: Double? = 0.0
+    // 加速度の値を一時的に保存
+    var attitude_accelarate_x: Double? = 0.0
+    var attitude_accelarate_y: Double? = 0.0
+    var attitude_accelarate_z: Double? = 0.0
+    // ジャイロの値を一時的に保存
+    var attitude_gyro_x: Double? = 0.0
+    var attitude_gyro_y: Double? = 0.0
+    var attitude_gyro_z: Double? = 0.0
+    // 地磁気の値を一時的に保存
+    var attitude_geomagnetism_x: Double? = 0.0
+    var attitude_geomagnetism_y: Double? = 0.0
+    var attitude_geomagnetism_z: Double? = 0.0
+    
     
     // MotionManager
     let motionManager = CMMotionManager()
@@ -39,9 +53,6 @@ class AttitudeViewController: UIViewController {
     @IBOutlet weak var attitude_view: SCNView! // ヨーピッチロールを表示するView
     @IBOutlet weak var altitude_raw: UILabel! // 高度
     @IBOutlet weak var timestamp_value: UILabel! // タイムスタンプ
-    
-    
-    var isUploaded: Bool = false
     
     
     override func viewDidLoad() {
@@ -118,6 +129,12 @@ class AttitudeViewController: UIViewController {
         // 加速度センサー[G]
         self.acceleration_raw.text =
         "加速度_X: \(String(format: "%06f", acceleration.x))\n加速度_Y: \(String(format: "%06f", acceleration.y))\n加速度_Z: \(String(format: "%06f", acceleration.z))"
+        // 一時的に保存
+        DispatchQueue.main.async {
+          self.attitude_accelarate_x = acceleration.x
+          self.attitude_accelarate_y = acceleration.y
+          self.attitude_accelarate_z = acceleration.z
+        }
     }
     func highpassFilter(acceleration: CMAcceleration){
         // ローパス(EMA)フィルター
@@ -135,11 +152,23 @@ class AttitudeViewController: UIViewController {
     func outputMagnetoData(geomagnetism: CMMagneticField){
         // 地磁気センサー
         self.geomagnetism_raw.text = "地磁気_X: \(String(format: "%06f", geomagnetism.x))\n地磁気_Y: \(String(format: "%06f", geomagnetism.y))\n地磁気_Z: \(String(format: "%06f", geomagnetism.z))"
+        // 一時的に保存
+        DispatchQueue.main.async {
+            self.attitude_geomagnetism_x = geomagnetism.x
+            self.attitude_geomagnetism_y = geomagnetism.y
+            self.attitude_geomagnetism_z = geomagnetism.z
+        }
     }
     
     func outputGyroData(gyro: CMRotationRate){
         // ジャイロセンサー
         self.gyroscope_raw.text = "ジャイロ_X: \(String(format: "%06f", gyro.x))\nジャイロ_Y: \(String(format: "%06f", gyro.y))\nジャイロ_Z: \(String(format: "%06f", gyro.z))"
+        // 一時的に保存
+        DispatchQueue.main.async {
+            self.attitude_gyro_x = gyro.x
+            self.attitude_gyro_y = gyro.y
+            self.attitude_gyro_z = gyro.z
+        }
     }
     
     func outputAttitudeData(attitude: CMAttitude){
@@ -149,31 +178,44 @@ class AttitudeViewController: UIViewController {
         self.timestamp_value.text = "Timestamp: \(String(format: "%06f", t))"
         // ヨーピッチロール
         self.attitude_raw.text = "Yaw: \(String(format: "%06f", attitude.yaw))\nPitch: \(String(format: "%06f", attitude.pitch))\nRoll: \(String(format: "%06f", attitude.roll))"
-        self.attitude_yaw=attitude.yaw
-        self.attitude_pitch=attitude.pitch
-        self.attitude_roll=(-1.0)*attitude.roll
-        self.attitude_timestamp=t
-        // DynamoDBにヨーピッチロールとタイムスタンプデータをアップロードする(このViewに来たらずっと上げ続ける)
-//        let awsAttitude = Attitude()
-//        awsAttitude?.TimeStamp = t as NSNumber
-//        awsAttitude?.Yaw = attitude.yaw as NSNumber
-//        awsAttitude?.Pitch = attitude.pitch as NSNumber
-//        awsAttitude?.Roll = attitude.roll as NSNumber
-//
-//        let dynamoDBObjectMapper = AWSDynamoDBObjectMapper.default()
-//        if !self.isUploaded {
-//            if let at = awsAttitude {
-//                dynamoDBObjectMapper.save(at).continueWith(block: { (task:AWSTask<AnyObject>!) -> Any? in
-//                    if let error = task.error as NSError? {
-//                        print("The request failed. Error: \(error)")
-//                    } else {
-//                        print(task.result)
-//                    }
-//                    self.isUploaded = true
-//                    return nil
-//                })
-//            }
-//        }
+        DispatchQueue.main.async {
+            self.attitude_yaw=attitude.yaw
+            self.attitude_pitch=attitude.pitch
+            self.attitude_roll=(-1.0)*attitude.roll
+            self.attitude_timestamp=t
+            // DynamoDBにヨーピッチロールとタイムスタンプデータをアップロードする(このViewに来たらずっと上げ続ける) //////////////////////////////////////
+            let awsAttitude = Attitude()
+            awsAttitude?.TimeStamp = t as NSNumber
+            awsAttitude?.Yaw = attitude.yaw as NSNumber
+            awsAttitude?.Pitch = attitude.pitch as NSNumber
+            awsAttitude?.Roll = attitude.roll as NSNumber
+            let appDelegate:AppDelegate = UIApplication.shared.delegate as! AppDelegate
+            if let deviceId = appDelegate.deviceId {
+                awsAttitude?.DeviceId = deviceId as NSString
+            }
+            awsAttitude?.AccelarateX = self.attitude_accelarate_x! as NSNumber
+            awsAttitude?.AccelarateY = self.attitude_accelarate_y! as NSNumber
+            awsAttitude?.AccelarateZ = self.attitude_accelarate_z! as NSNumber
+            awsAttitude?.AngularX = self.attitude_gyro_x! as NSNumber
+            awsAttitude?.AngularY = self.attitude_gyro_y! as NSNumber
+            awsAttitude?.AngularZ = self.attitude_gyro_z! as NSNumber
+            awsAttitude?.DirectionX = self.attitude_geomagnetism_x! as NSNumber
+            awsAttitude?.DirectionY = self.attitude_geomagnetism_y! as NSNumber
+            awsAttitude?.DirectionZ = self.attitude_geomagnetism_z! as NSNumber
+
+            let dynamoDBObjectMapper = AWSDynamoDBObjectMapper.default()
+            if let at = awsAttitude {
+                dynamoDBObjectMapper.save(at).continueWith(block: { (task:AWSTask<AnyObject>!) -> Any? in
+                    if let error = task.error as NSError? {
+                        print("The request failed. Error: \(error)")
+                    } else {
+                        print(t, " uploaded!")
+                    }
+                    return nil
+                })
+            }
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         
     }
     
@@ -194,28 +236,29 @@ class AttitudeViewController: UIViewController {
         let d = 50 * (Float.pi / 180) // rad = theta * (pi / 180)
         self.attitude_view.scene?.rootNode.eulerAngles = SCNVector3(self.attitude_pitch!, self.attitude_yaw!, self.attitude_roll!)
         print(d)
-        // DynamoDBにヨーピッチロールとタイムスタンプデータをアップロードする(タップされたらその時のヨーピッチロールをDynamoDBに上げる)
-        let awsAttitude = Attitude()
-        awsAttitude?.TimeStamp = self.attitude_timestamp! as NSNumber
-        awsAttitude?.Yaw = self.attitude_yaw! as NSNumber
-        awsAttitude?.Pitch = self.attitude_pitch! as NSNumber
-        awsAttitude?.Roll = self.attitude_roll! as NSNumber
-        let appDelegate:AppDelegate = UIApplication.shared.delegate as! AppDelegate
-        if let deviceId = appDelegate.deviceId {
-            awsAttitude?.DeviceId = deviceId as NSString
-        }
-        
-        let dynamoDBObjectMapper = AWSDynamoDBObjectMapper.default()
-        if let at = awsAttitude {
-            dynamoDBObjectMapper.save(at).continueWith(block: { (task:AWSTask<AnyObject>!) -> Any? in
-                if let error = task.error as NSError? {
-                    print("The request failed. Error: \(error)")
-                } else {
-                    print(task.result!)
-                }
-                return nil
-            })
-        }
+        // DynamoDBにヨーピッチロールとタイムスタンプデータをアップロードする(タップされたらその時のヨーピッチロールをDynamoDBに上げる) ///////////////////////////////////
+//        let awsAttitude = Attitude()
+//        awsAttitude?.TimeStamp = self.attitude_timestamp! as NSNumber
+//        awsAttitude?.Yaw = self.attitude_yaw! as NSNumber
+//        awsAttitude?.Pitch = self.attitude_pitch! as NSNumber
+//        awsAttitude?.Roll = self.attitude_roll! as NSNumber
+//        let appDelegate:AppDelegate = UIApplication.shared.delegate as! AppDelegate
+//        if let deviceId = appDelegate.deviceId {
+//            awsAttitude?.DeviceId = deviceId as NSString
+//        }
+//
+//        let dynamoDBObjectMapper = AWSDynamoDBObjectMapper.default()
+//        if let at = awsAttitude {
+//            dynamoDBObjectMapper.save(at).continueWith(block: { (task:AWSTask<AnyObject>!) -> Any? in
+//                if let error = task.error as NSError? {
+//                    print("The request failed. Error: \(error)")
+//                } else {
+//                    print(task.result!)
+//                }
+//                return nil
+//            })
+//        }
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
     
     override func didReceiveMemoryWarning() {
