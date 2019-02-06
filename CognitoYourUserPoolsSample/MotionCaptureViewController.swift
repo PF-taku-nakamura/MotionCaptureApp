@@ -23,7 +23,10 @@ class MotionCaptureViewController: UIViewController {
     
     // 機体idを指定するためのドラムロール
     var pickerView: UIPickerView = UIPickerView()
-    let list: [String] = ["1", "2", "3", "4"]
+    let list: [String] = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"]
+    
+    //タップ座標用変数
+    var tapPoint = CGPoint(x: 0, y: 0)
     
     // 動画情報の表示
     var isRecoding = false
@@ -89,6 +92,11 @@ class MotionCaptureViewController: UIViewController {
         //表示可能最大行数を指定
         self.showFpsLabel.numberOfLines = 0
         
+        // ジェスチャーの追加
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapAction))
+        tapGesture.delegate = self as? UIGestureRecognizerDelegate
+        videoView.addGestureRecognizer(tapGesture)
+        
         // カメラの起動
         setupCamera(isBack: self.isBackCamera)
     }
@@ -151,6 +159,19 @@ class MotionCaptureViewController: UIViewController {
         // セッションの開始
         DispatchQueue.global(qos: .userInitiated).async {
             self.captureSession.startRunning()
+        }
+    }
+    
+    //画像のどこの座標をタップしたかを取得する関数
+    @objc func tapAction(sender:UITapGestureRecognizer){
+        tapPoint = sender.location(in: videoView)
+        do {
+            try videoDevice.lockForConfiguration()
+            //videoDevice.focusMode = AVCaptureDevice.FocusMode.locked // オートフォーカスを切る
+            videoDevice.focusPointOfInterest = tapPoint
+            videoDevice.focusMode = AVCaptureDevice.FocusMode.autoFocus
+        } catch {
+            print("ロック解除エラー")
         }
     }
 
@@ -234,6 +255,7 @@ extension MotionCaptureViewController : UIPickerViewDelegate, UIPickerViewDataSo
 extension MotionCaptureViewController: AVCaptureFileOutputRecordingDelegate {
     
     func uploadVideo(){
+        let start = Date()
         // 処理中のクルクルスタート
         DispatchQueue.main.async(execute: {
             self.ActivityIndicator.startAnimating()
@@ -275,6 +297,8 @@ extension MotionCaptureViewController: AVCaptureFileOutputRecordingDelegate {
                                     }
                                     return nil;
         }
+        let elapsed = Date().timeIntervalSince(start)
+        print("アップロード処理時間", elapsed)
     }
 
     func setMaxFps(maxFps: Double) {
